@@ -5,11 +5,28 @@ services:
   ffc-pay-dps:
     build:
       target: development
+    depends_on:
+      - ffc-pay-dps-azurite
     image: ffc-pay-dps-development
     container_name: ffc-pay-dps-development
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - "9263:9229"
     volumes:
       - ./app:/home/node/app
       - ./package.json:/home/node/package.json
+
+  ffc-pay-dps-azurite:
+    volumes:
+      - azurite_data:/data
+    ports:
+      - "10075:10000"
+
+  ffc-pay-dps-postgres:
+    ports:
+      - "5452:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  azurite_data:
+  postgres_data:

@@ -7,6 +7,8 @@ services:
       target: development
     image: ffc-pay-dps-development
     container_name: ffc-pay-dps-test
+    depends_on:
+      - ffc-pay-dps-azurite
     command: npm run test
     volumes:
       - ./app:/home/node/app
@@ -14,3 +16,16 @@ services:
       - ./test-output:/home/node/test-output
       - ./jest.config.js:/home/node/jest.config.js
       - ./package.json:/home/node/package.json
+    environment:
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-pay-dps-azurite:10000/devstoreaccount1;
+  
+  ffc-pay-dps-azurite:
+    labels:
+      com.docker.compose.pay.role: test
+
+  ffc-pay-dps-postgres:
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}

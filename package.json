@@ -14,11 +14,15 @@
     "start:debug": "nodemon --inspect-brk=0.0.0.0 --ext js --legacy-watch app/index.js"
   },
   "author": "Defra",
-  "contributors": [],
+  "contributors": [
+    "Sam Plackett samuel.plackett@eviden.com"
+  ],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@hapi/hapi": "20.2.2",
-    "applicationinsights": "2.3.5"
+    "@azure/identity": "2.0.5",
+    "@azure/storage-blob": "12.13.0",
+    "applicationinsights": "2.3.5",
+    "joi": "17.10.2"
   },
   "devDependencies": {
     "jest": "29.2.2",
