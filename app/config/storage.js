@@ -6,7 +6,9 @@ const schema = Joi.object({
   dpsContainer: Joi.string().required(),
   daxContainer: Joi.string().required(),
   inboundFolder: Joi.string().required(),
+  outboundFolder: Joi.string().required(),
   archiveFolder: Joi.string().required(),
+  quarantineFolder: Joi.string().required(),
   useConnectionStr: Joi.boolean().default(false),
   createContainers: Joi.boolean().default(false)
 })
@@ -17,7 +19,9 @@ const config = {
   dpsContainer: 'dps',
   daxContainer: 'dax',
   inboundFolder: 'inbound',
+  outboundFolder: 'outbound',
   archiveFolder: 'archive',
+  quarantineFolder: 'quarantine',
   useConnectionStr: process.env.AZURE_STORAGE_USE_CONNECTION_STRING,
   createContainers: process.env.AZURE_STORAGE_CREATE_CONTAINERS
 }

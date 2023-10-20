@@ -1,13 +1,23 @@
 const storage = require('../storage')
+const processFile = require('../processing')
+const db = require('../data')
 
 const pollInbound = async () => {
-  const controlFiles = await storage.getPendingControlFiles()
-  for (const controlFile of controlFiles) {
-    try {
-      console.log(`File Received: ${controlFile}`)
-    } catch (err) {
-      console.error(err)
+  const transaction = await db.sequelize.transaction()
+  try {
+    await db.lock.findByPk(1, { transaction, lock: true })
+    const files = await storage.getPendingFiles()
+    for (const file of files) {
+      try {
+        await processFile(file.name, file.type)
+      } catch (err) {
+        console.error(err)
+      }
     }
+    await transaction.commit()
+  } catch (err) {
+    await transaction.rollback()
+    throw err
   }
 }
 

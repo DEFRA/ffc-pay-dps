@@ -7,33 +7,21 @@ services:
     container_name: ffc-pay-dps
     depends_on:
       - ffc-pay-dps-postgres
+      - ffc-pay-dps-azurite
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-pay-dps-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
-      AZURE_STORAGE_ACCOUNT_NAME: ${AZURE_STORAGE_ACCOUNT_NAME:-devstoreaccount1}
-      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST}
-      MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD}
-      MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER}
-      PAYMENT_TOPIC_ADDRESS: ${PAYMENT_TOPIC_ADDRESS:-ffc-pay-request}${MESSAGE_QUEUE_SUFFIX}
       AZURE_STORAGE_USE_CONNECTION_STRING: "true"
       AZURE_STORAGE_CREATE_CONTAINERS: "true"
       POLLING_INTERVAL: ${POLLING_INTERVAL:-10000}
-      MAX_PROCESSING_TRIES: ${MAX_PROCESSING_TRIES:-3}
       POSTGRES_DB: ffc_pay_dps
-      POSTGRES_HOST: ${POSTGRES_HOST:-ffc-pay-dps}
+      POSTGRES_HOST: ${POSTGRES_HOST:-ffc-pay-dps-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
       POSTGRES_PORT: 5432
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
-      EVENT_TOPIC_ADDRESS: ${EVENT_TOPIC_ADDRESS:-ffc-pay-event}${MESSAGE_QUEUE_SUFFIX}
-      EVENTS_TOPIC_ADDRESS: ${EVENTS_TOPIC_ADDRESS:-ffc-pay-events}${MESSAGE_QUEUE_SUFFIX}
+      AZURE_STORAGE_ACCOUNT_NAME: ${AZURE_STORAGE_ACCOUNT_NAME:-devstoreaccount1}
       AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-pay-dps-azurite:10000/devstoreaccount1;
-
-  ffc-pay-dps-azurite:
-    image: mcr.microsoft.com/azure-storage/azurite:3.23.0
-    command: "azurite-blob --loose --blobHost 0.0.0.0"
-    labels:
-      com.docker.compose.pay.role: ffc-pay-dps-azurite
 
   ffc-pay-dps-postgres:
     image: postgres:11.4-alpine
@@ -41,3 +29,9 @@ services:
       POSTGRES_DB: ffc_pay_dps
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
+
+  ffc-pay-dps-azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:3.23.0
+    command: "azurite-blob --loose --blobHost 0.0.0.0"
+    labels:
+      com.docker.compose.pay.role: ffc-pay-dps-azurite

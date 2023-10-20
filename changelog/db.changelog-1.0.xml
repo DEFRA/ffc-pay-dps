@@ -1,12 +1,84 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
   <changeSet author="Sam Plackett" id="1">
-    <createTable tableName="test">
-      <column autoIncrement="true" name="testId" type="INTEGER">
-          <constraints nullable="false" primaryKey="true" primaryKeyName="test_pkey"/>
-      </column>
-    </createTable>
+    <tagDatabase tag="v0.0.0" />
+  </changeSet>
   <changeSet author="Sam Plackett" id="2">
     <tagDatabase tag="v1.0.0" />
+  </changeSet>
+  <changeSet author="Sam Plackett" id="3">
+    <createTable tableName="fileTypes">
+      <column autoIncrement="false" name="fileTypeId" type="SMALLINT">
+        <constraints nullable="true" primaryKey="true" primaryKeyName="fileType_pkey"/>
+      </column>
+      <column name="fileType" type="VARCHAR(10)"/>
+    </createTable>
+    <insert tableName="fileTypes">
+			<column name="fileTypeId" value="1"/>
+			<column name="fileType" value="DPS"/>
+		</insert>
+    <insert tableName="fileTypes">
+			<column name="fileTypeId" value="2"/>
+			<column name="fileType" value="DAX"/>
+		</insert>
+    <createTable tableName="statuses">
+      <column autoIncrement="false" name="statusId" type="SMALLINT">
+        <constraints nullable="true" primaryKey="true" primaryKeyName="status_pkey"/>
+      </column>
+      <column name="status" type="VARCHAR(255)"/>
+    </createTable>
+    <insert tableName="statuses">
+			<column name="statusId" value="1"/>
+			<column name="status" value="In Progress"/>
+		</insert>
+    <insert tableName="statuses">
+			<column name="statusId" value="2"/>
+			<column name="status" value="Success"/>
+		</insert>
+    <insert tableName="statuses">
+			<column name="statusId" value="3"/>
+			<column name="status" value="Failed"/>
+		</insert>
+    <createTable tableName="batches">
+      <column autoIncrement="true" name="batchId" type="INTEGER">
+          <constraints nullable="false" primaryKey="true" primaryKeyName="batch_pkey"/>
+      </column>
+      <column name="filename" type="VARCHAR(255)"/>
+      <column name="fileTypeId" type="SMALLINT"/>
+      <column name="statusId" type="SMALLINT" defaultValue="1"/>
+      <column name="processedOn" type="TIMESTAMP WITH TIME ZONE"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="createdAt" type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updatedAt" type="TIMESTAMP WITH TIME ZONE">
+        <constraints nullable="false"/>
+      </column>
+      <column name="processingTries" type="SMALLINT" defaultValue="1"/>
+    </createTable>
+    <addForeignKeyConstraint baseColumnNames="statusId"
+                             baseTableName="batches"
+                             constraintName="fk_batches_statusId"
+                             referencedColumnNames="statusId"
+                             referencedTableName="statuses"/>
+    <addForeignKeyConstraint baseColumnNames="fileTypeId"
+                             baseTableName="batches"
+                             constraintName="fk_batches_fileTypeId"
+                             referencedColumnNames="fileTypeId"
+                             referencedTableName="fileTypes"/>
+    <createTable tableName="lock">
+      <column name="lockId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="lock_pkey"/>
+      </column>
+    </createTable>
+    <insert tableName="lock">
+      <column name="lockId" value="1" />
+    </insert>
+    <createTable tableName="customers">
+      <column autoIncrement="true" name="customerId" type="INTEGER">
+          <constraints nullable="false" primaryKey="true" primaryKeyName="customerId_pkey"/>
+      </column>
+      <column name="legacyId" type="VARCHAR(9)" />
+      <column name="frn" type="BIGINT" />
+    </createTable>
   </changeSet>
 </databaseChangeLog>
