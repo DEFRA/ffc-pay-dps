@@ -1,12 +1,12 @@
 const db = require('../data')
 
-const getFRN = async (legacyId) => {
+const getFRN = async (traderId) => {
   // if length is 10 chars - this is already the FRN we want
-  if (legacyId.length === 10) {
-    return legacyId
+  if (traderId.length === 10) {
+    return traderId
   }
   const matchedEntry = await db.customer.findOne({
-    where: { legacyId },
+    where: { traderId },
     raw: true
   })
   if (matchedEntry === null) {

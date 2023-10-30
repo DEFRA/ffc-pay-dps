@@ -4,7 +4,7 @@ const Joi = require('joi')
 const schema = Joi.object({
   pollingInterval: Joi.number().default(10000), // 10 seconds
   maxProcessingTries: Joi.number().default(3),
-  useV2Events: Joi.boolean().default(true),
+  useEvents: Joi.boolean().default(true),
   pollingActive: Joi.boolean().default(true)
 })
 
@@ -12,7 +12,7 @@ const schema = Joi.object({
 const config = {
   pollingInterval: process.env.POLLING_INTERVAL,
   maxProcessingTries: process.env.MAX_PROCESSING_TRIES,
-  useV2Events: process.env.USE_V2_EVENTS,
+  useEvents: process.env.USE_V2_EVENTS,
   pollingActive: true
 }
 

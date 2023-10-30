@@ -7,7 +7,6 @@ const publish = async (content, filename, fileType) => {
   filename = getNewFileName(filename, fileType)
   const newContent = getNewContent(content, fileType)
   const body = await writeToString(newContent)
-  console.log(body)
   const outboundBlobClient = await getOutboundBlobClient(filename, fileType)
   await outboundBlobClient.upload(body, body.length)
   console.info(`Published ${filename}`)

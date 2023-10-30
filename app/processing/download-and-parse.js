@@ -11,7 +11,6 @@ const downloadAndParse = async (filename, fileType) => {
     console.log(`Archiving ${filename}, successfully parsed file`)
     await batch.updateStatus(filename, batch.status.success)
     await storage.archiveFile(filename, fileType)
-    // await sendBatchSuccessEvent(filename)
   } else {
     console.log(`Quarantining ${filename}, failed to parse file`)
     await fileProcessingFailed(filename, fileType)

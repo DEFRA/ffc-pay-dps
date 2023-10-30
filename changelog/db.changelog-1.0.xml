@@ -77,7 +77,7 @@
       <column autoIncrement="true" name="customerId" type="INTEGER">
           <constraints nullable="false" primaryKey="true" primaryKeyName="customerId_pkey"/>
       </column>
-      <column name="legacyId" type="VARCHAR(9)" />
+      <column name="traderId" type="VARCHAR(9)" />
       <column name="frn" type="BIGINT" />
     </createTable>
   </changeSet>

@@ -23,7 +23,6 @@ const sendParsedPaymentRequests = async (paymentRequests, filename, fileType) =>
     } else {
       console.log('DAX flow not yet implemented')
     }
-    // await sendBatchProcessedEvents(paymentRequestsCollection, filename, fileType)
     console.log('Events not yet implemented')
   } catch (err) {
     console.error(`One or more payment requests could not be sent: ${err}`)

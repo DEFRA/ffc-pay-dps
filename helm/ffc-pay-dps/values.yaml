@@ -37,7 +37,6 @@ container:
   storageFolder: inbound
   storageDaxContainer: dax
   storageDaxFolder: outbound
-  eventTopicAddress: ffc-pay-event
   eventsTopicAddress: ffc-pay-events
   useV2Events: true
   
