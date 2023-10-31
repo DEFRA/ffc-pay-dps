@@ -33,6 +33,8 @@ container:
   azureStorageConnectionString: dummy
   azureStorageUseConnectionString: false
   azureStorageCreateContainers: false
+  messageQueueHost: namespace.servicebus.windows.net
+  fileSendTopicAddress: ffc-pay-file-send
   storageContainer: dps
   storageFolder: inbound
   storageDaxContainer: dax

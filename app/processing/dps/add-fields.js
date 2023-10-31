@@ -1,11 +1,11 @@
 const getFRN = require('../get-frn')
 
-const addFields = async (paymentRequests) => {
-  for (const paymentRequest of paymentRequests) {
-    paymentRequest.primaryFRN = await getFRN(paymentRequest.primaryTrader)
-    paymentRequest.usedByFRN = await getFRN(paymentRequest.usedByTrader)
+const addFields = async (securityRequests) => {
+  for (const securityRequest of securityRequests) {
+    securityRequest.primaryFRN = await getFRN(securityRequest.primaryTrader)
+    securityRequest.usedByFRN = await getFRN(securityRequest.usedByTrader)
   }
-  return paymentRequests
+  return securityRequests
 }
 
 module.exports = {

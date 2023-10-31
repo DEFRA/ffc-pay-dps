@@ -10,11 +10,15 @@ const schema = joi.object({
     username: joi.string(),
     password: joi.string()
   },
+  sendTopic: {
+    address: joi.string()
+  },
   eventsTopic: {
     address: joi.string()
   }
 })
-const mqConfig = {
+
+const config = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
     useCredentialChain: process.env.NODE_ENV === PRODUCTION,
@@ -23,12 +27,15 @@ const mqConfig = {
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD
   },
+  sendTopic: {
+    address: process.env.FILESEND_TOPIC_ADDRESS
+  },
   eventsTopic: {
     address: process.env.EVENT_TOPIC_ADDRESS
   }
 }
 
-const result = schema.validate(mqConfig, {
+const result = schema.validate(config, {
   abortEarly: false
 })
 
@@ -38,7 +45,9 @@ if (result.error) {
 }
 
 const eventsTopic = { ...result.value.messageQueue, ...result.value.eventsTopic }
+const sendTopic = { ...result.value.messageQueue, ...result.value.sendTopic }
 
 module.exports = {
-  eventsTopic
+  eventsTopic,
+  sendTopic
 }

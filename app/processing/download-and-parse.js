@@ -1,11 +1,11 @@
 const storage = require('../storage')
-const parsePaymentFile = require('./parse-payment-file')
+const parseSecurityFile = require('./parse-security-file')
 const fileProcessingFailed = require('./file-processing-failed')
 const batch = require('./batch')
 
 const downloadAndParse = async (filename, fileType) => {
   const buffer = await storage.getFile(filename, fileType)
-  const parseSuccess = await parsePaymentFile(filename, buffer, fileType)
+  const parseSuccess = await parseSecurityFile(filename, buffer, fileType)
 
   if (parseSuccess) {
     console.log(`Archiving ${filename}, successfully parsed file`)

@@ -1,20 +1,20 @@
-const getContent = (paymentRequest) => {
+const getContent = (securityRequest) => {
   const line = [
-    paymentRequest.primaryTrader ?? '',
-    paymentRequest.usedByTrader ?? '',
-    paymentRequest.reference ?? '',
-    paymentRequest.fullReference ?? '',
-    paymentRequest.guaranteeNumber ?? '',
-    paymentRequest.scheme ?? '',
-    paymentRequest.debit ?? '',
-    paymentRequest.credit ?? '',
-    paymentRequest.currency ?? '',
-    paymentRequest.transactionCategory ?? '',
-    paymentRequest.makeForwardDate ?? '',
-    paymentRequest.measurementStartDate ?? '',
-    paymentRequest.description ?? '',
-    paymentRequest.primaryFRN ?? '',
-    paymentRequest.usedByFRN ?? ''
+    securityRequest.primaryTrader ?? '',
+    securityRequest.usedByTrader ?? '',
+    securityRequest.reference ?? '',
+    securityRequest.fullReference ?? '',
+    securityRequest.guaranteeNumber ?? '',
+    securityRequest.scheme ?? '',
+    securityRequest.debit ?? '',
+    securityRequest.credit ?? '',
+    securityRequest.currency ?? '',
+    securityRequest.transactionCategory ?? '',
+    securityRequest.makeForwardDate ?? '',
+    securityRequest.measurementStartDate ?? '',
+    securityRequest.description ?? '',
+    securityRequest.primaryFRN ?? '',
+    securityRequest.usedByFRN ?? ''
   ]
   return [line]
 }

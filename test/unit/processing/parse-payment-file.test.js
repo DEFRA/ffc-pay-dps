@@ -1,31 +1,31 @@
-jest.mock('../../../app/processing/get-payment-requests-from-file')
-const getPaymentRequestsFromFile = require('../../../app/processing/get-payment-requests-from-file')
+jest.mock('../../../app/processing/get-security-requests-from-file')
+const getSecurityRequestsFromFile = require('../../../app/processing/get-security-requests-from-file')
 
-const parsePaymentFile = require('../../../app/processing/parse-payment-file')
+const parseSecurityFile = require('../../../app/processing/parse-security-file')
 const { DPS } = require('../../../app/constants/file-types')
 const filename = require('../../mocks/filename')
 
 let fileBuffer
 
-let paymentRequest
-let paymentRequests
+let securityRequest
+let securityRequests
 
-let paymentRequestsCollection
+let securityRequestsCollection
 
 describe('Parse and send events on success or failure', () => {
   beforeEach(async () => {
     fileBuffer = Buffer.from('706475,706475,1BH24607,1BH24607,,2100,,471.00,GBP,Import,,08/09/2023,\r\n766951,766951,1PC09913,1PC09913,,2410,,14618.00,GBP,Import,,08/09/2023,\r\n015556,015556,1SA00002,1SA00002,,1100,,45030.00,GBP,Import,,07/09/2023,\r\n')
 
-    paymentRequest = {
-      paymentRequestId: 1
+    securityRequest = {
+      securityRequestId: 1
     }
 
-    paymentRequests = [paymentRequest]
+    securityRequests = [securityRequest]
 
-    paymentRequestsCollection = { paymentRequests }
+    securityRequestsCollection = { securityRequests }
 
-    getPaymentRequestsFromFile.mockResolvedValue({
-      paymentRequestsCollection
+    getSecurityRequestsFromFile.mockResolvedValue({
+      securityRequestsCollection
     })
   })
 
@@ -33,34 +33,34 @@ describe('Parse and send events on success or failure', () => {
     jest.resetAllMocks()
   })
 
-  test('should call getPaymentRequestsFromFile when valid filename, fileBuffer and file type are received', async () => {
-    await parsePaymentFile(filename, fileBuffer, DPS)
-    expect(getPaymentRequestsFromFile).toHaveBeenCalled()
+  test('should call getSecurityRequestsFromFile when valid filename, fileBuffer and file type are received', async () => {
+    await parseSecurityFile(filename, fileBuffer, DPS)
+    expect(getSecurityRequestsFromFile).toHaveBeenCalled()
   })
 
-  test('should call getPaymentRequestsFromFile once when valid filename, fileBuffer file type are received', async () => {
-    await parsePaymentFile(filename, fileBuffer, DPS)
-    expect(getPaymentRequestsFromFile).toHaveBeenCalledTimes(1)
+  test('should call getSecurityRequestsFromFile once when valid filename, fileBuffer file type are received', async () => {
+    await parseSecurityFile(filename, fileBuffer, DPS)
+    expect(getSecurityRequestsFromFile).toHaveBeenCalledTimes(1)
   })
 
-  test('should call getPaymentRequestsFromFile with fileBuffer when valid filename, fileBuffer file type are received', async () => {
-    await parsePaymentFile(filename, fileBuffer, DPS)
-    expect(getPaymentRequestsFromFile).toHaveBeenCalledWith(fileBuffer, DPS, filename)
+  test('should call getSecurityRequestsFromFile with fileBuffer when valid filename, fileBuffer file type are received', async () => {
+    await parseSecurityFile(filename, fileBuffer, DPS)
+    expect(getSecurityRequestsFromFile).toHaveBeenCalledWith(fileBuffer, DPS, filename)
   })
 
-  test('should call getPaymentRequestsFromFile when invalid filename, fileBuffer and file type are received', async () => {
+  test('should call getSecurityRequestsFromFile when invalid filename, fileBuffer and file type are received', async () => {
     fileBuffer = ''
 
-    await parsePaymentFile('', fileBuffer, DPS)
+    await parseSecurityFile('', fileBuffer, DPS)
 
-    expect(getPaymentRequestsFromFile).toHaveBeenCalled()
+    expect(getSecurityRequestsFromFile).toHaveBeenCalled()
   })
 
-  test('should call getPaymentRequestsFromFile once when invalid filename, fileBuffer and file type are received', async () => {
+  test('should call getSecurityRequestsFromFile once when invalid filename, fileBuffer and file type are received', async () => {
     fileBuffer = ''
 
-    await parsePaymentFile('', fileBuffer, DPS)
+    await parseSecurityFile('', fileBuffer, DPS)
 
-    expect(getPaymentRequestsFromFile).toHaveBeenCalledTimes(1)
+    expect(getSecurityRequestsFromFile).toHaveBeenCalledTimes(1)
   })
 })

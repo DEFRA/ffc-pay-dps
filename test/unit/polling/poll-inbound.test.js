@@ -39,7 +39,7 @@ describe('poll inbound', () => {
     expect(mockStorage.getPendingFiles).toHaveBeenCalledTimes(1)
   })
 
-  test('should process each payment file if file type matched', async () => {
+  test('should process each security file if file type matched', async () => {
     await pollInbound()
     expect(mockProcessFile).toHaveBeenCalledTimes(2)
     expect(mockProcessFile).toHaveBeenCalledWith('file1', DPS)

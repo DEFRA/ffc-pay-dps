@@ -11,7 +11,7 @@ const readDPSFile = async (readBatchLines, fileType, input, filename) => {
 
     readBatchLines.on('close', () => {
       batchLines
-        ? resolve({ paymentRequests: batchLines })
+        ? resolve({ securityRequests: batchLines })
         : reject(new Error('Invalid file'))
       readBatchLines.close()
       input.destroy()
