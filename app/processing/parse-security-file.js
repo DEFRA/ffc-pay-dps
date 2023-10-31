@@ -24,7 +24,7 @@ const sendParsedSecurityRequests = async (securityRequests, filename, fileType) 
     } else {
       console.log('DAX flow not yet implemented')
     }
-    await sendSubmissionMessage(securityRequests)
+    await sendSubmissionMessage(filename, fileType)
     console.log('Events not yet implemented')
   } catch (err) {
     console.error(`One or more security requests could not be sent: ${err}`)

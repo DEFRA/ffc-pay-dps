@@ -1,8 +1,11 @@
 const { SOURCE } = require('../constants/source')
 
-function createMessage (body) {
+function createMessage (filename, ledger) {
   return {
-    body,
+    body: {
+      filename,
+      ledger
+    },
     type: 'uk.gov.defra.ffc.pay.file.send',
     source: SOURCE
   }
