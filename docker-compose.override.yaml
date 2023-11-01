@@ -21,7 +21,7 @@ services:
     volumes:
       - azurite_data:/data
     ports:
-      - "10000:10000"
+      - "10075:10000"
 
   ffc-pay-dps-postgres:
     ports:
