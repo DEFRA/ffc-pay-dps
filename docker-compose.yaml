@@ -7,7 +7,7 @@ services:
     container_name: ffc-pay-dps
     depends_on:
       - ffc-pay-dps-postgres
-      - ffc-pay-dps-azurite
+      - ffc-pay-batch-azurite
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-pay-dps-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
@@ -17,6 +17,7 @@ services:
       MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST}
       MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD}
       MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER}
+      EVENTS_TOPIC_ADDRESS: ${EVENTS_TOPIC_ADDRESS:-ffc-pay-events}${MESSAGE_QUEUE_SUFFIX}
       FILESEND_TOPIC_ADDRESS: ${SEND_TOPIC_ADDRESS:-ffc-pay-file-send}${MESSAGE_QUEUE_SUFFIX}
       POSTGRES_DB: ffc_pay_dps
       POSTGRES_HOST: ${POSTGRES_HOST:-ffc-pay-dps-postgres}
@@ -25,7 +26,7 @@ services:
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       AZURE_STORAGE_ACCOUNT_NAME: ${AZURE_STORAGE_ACCOUNT_NAME:-devstoreaccount1}
-      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-pay-dps-azurite:10000/devstoreaccount1;
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-pay-batch-azurite:10000/devstoreaccount1;
 
   ffc-pay-dps-postgres:
     image: postgres:11.4-alpine
@@ -34,8 +35,8 @@ services:
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
 
-  ffc-pay-dps-azurite:
+  ffc-pay-batch-azurite:
     image: mcr.microsoft.com/azure-storage/azurite:3.23.0
     command: "azurite-blob --loose --blobHost 0.0.0.0"
     labels:
-      com.docker.compose.pay.role: ffc-pay-dps-azurite
+      com.docker.compose.pay.role: ffc-pay-batch-azurite

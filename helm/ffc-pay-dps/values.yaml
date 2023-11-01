@@ -35,12 +35,12 @@ container:
   azureStorageCreateContainers: false
   messageQueueHost: namespace.servicebus.windows.net
   fileSendTopicAddress: ffc-pay-file-send
-  storageContainer: dps
+  storageContainer: batch
   storageFolder: inbound
   storageDaxContainer: dax
   storageDaxFolder: outbound
   eventsTopicAddress: ffc-pay-events
-  useV2Events: true
+  useEvents: true
   
 postgresService:
   postgresDb: ffc_pay_dps

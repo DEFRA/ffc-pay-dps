@@ -1,6 +1,6 @@
 const { SOURCE } = require('../constants/source')
 
-function createMessage (filename, ledger) {
+const createMessage = (filename, ledger) => {
   return {
     body: {
       filename,

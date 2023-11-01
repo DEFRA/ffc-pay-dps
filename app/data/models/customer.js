@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const customer = sequelize.define('customer', {
     customerId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    traderId: DataTypes.STRING,
+    trader: DataTypes.STRING,
     frn: DataTypes.STRING
   },
   {
