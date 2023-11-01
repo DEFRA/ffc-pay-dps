@@ -1,8 +1,8 @@
 const { DPS } = require('../constants/file-types')
-const { sendSubmissionMessage } = require('../messaging')
+const { sendSubmissionMessage, sendReturnMessage } = require('../messaging')
 const { addFields: addDPSFields } = require('./dps/add-fields')
 const getSecurityRequestsFromFile = require('./get-security-requests-from-file')
-const { publish: publishDPS } = require('./publish')
+const { publish } = require('./publish')
 
 const parseSecurityFile = async (filename, fileBuffer, fileType) => {
   try {
@@ -19,12 +19,12 @@ const parseSecurityFile = async (filename, fileBuffer, fileType) => {
 
 const sendParsedSecurityRequests = async (securityRequests, filename, fileType) => {
   try {
+    await publish(securityRequests, filename, fileType)
     if (fileType === DPS) {
-      await publishDPS(securityRequests, filename, fileType)
+      await sendSubmissionMessage(filename, fileType)
     } else {
-      console.log('DAX flow not yet implemented')
+      await sendReturnMessage(securityRequests, filename)
     }
-    await sendSubmissionMessage(filename, fileType)
     console.log('Events not yet implemented')
   } catch (err) {
     console.error(`One or more security requests could not be sent: ${err}`)

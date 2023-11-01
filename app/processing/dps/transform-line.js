@@ -1,10 +1,11 @@
 const { v4: uuidv4 } = require('uuid')
+const { DPS } = require('../../constants/file-types')
 
-const transformLine = (batchLine, fileTypeId, filename) => {
+const transformLine = (batchLine, filename) => {
   return {
     correlationId: uuidv4(),
     batch: filename,
-    fileTypeId,
+    fileTypeId: DPS.fileTypeId,
     primaryTrader: batchLine[0],
     usedByTrader: batchLine[1],
     reference: batchLine[2],

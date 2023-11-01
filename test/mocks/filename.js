@@ -1,1 +1,4 @@
-module.exports = 'BGAN20230908164539C.OUT'
+module.exports = {
+  DPS: 'BGAN20230908164539C.OUT',
+  DAX: 'BGAN20171101114636D.ack'
+}

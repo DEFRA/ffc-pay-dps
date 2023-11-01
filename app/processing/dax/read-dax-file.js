@@ -1,6 +1,6 @@
 const { transformLine } = require('./transform-line')
 
-const readDPSFile = async (readBatchLines, input, filename) => {
+const readDAXFile = async (readBatchLines, input, filename) => {
   return new Promise((resolve, reject) => {
     const batchLines = []
     readBatchLines.on('line', (line) => {
@@ -29,5 +29,5 @@ const readLine = (batchLines, batchLine, filename) => {
 }
 
 module.exports = {
-  readDPSFile
+  readDAXFile
 }

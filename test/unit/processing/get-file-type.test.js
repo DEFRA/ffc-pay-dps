@@ -4,12 +4,12 @@ const filename = require('../../mocks/filename')
 
 describe('Get file type', () => {
   test('returns DPS for DPS filename', async () => {
-    const result = getFileType(filename)
+    const result = getFileType(filename.DPS)
     expect(result).toMatchObject(DPS)
   })
 
   test('returns DAX for DAX return filename', async () => {
-    const result = getFileType(filename.slice(0, -4) + '.ack')
+    const result = getFileType(filename.DAX)
     expect(result).toMatchObject(DAX)
   })
 

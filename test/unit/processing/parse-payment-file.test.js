@@ -12,7 +12,7 @@ let securityRequests
 
 let securityRequestsCollection
 
-describe('Parse and send events on success or failure', () => {
+describe('Parse', () => {
   beforeEach(async () => {
     fileBuffer = Buffer.from('706475,706475,1BH24607,1BH24607,,2100,,471.00,GBP,Import,,08/09/2023,\r\n766951,766951,1PC09913,1PC09913,,2410,,14618.00,GBP,Import,,08/09/2023,\r\n015556,015556,1SA00002,1SA00002,,1100,,45030.00,GBP,Import,,07/09/2023,\r\n')
 

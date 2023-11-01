@@ -10,7 +10,10 @@ const schema = joi.object({
     username: joi.string(),
     password: joi.string()
   },
-  sendTopic: {
+  submitTopic: {
+    address: joi.string()
+  },
+  returnTopic: {
     address: joi.string()
   },
   eventsTopic: {
@@ -27,8 +30,11 @@ const config = {
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD
   },
-  sendTopic: {
+  submitTopic: {
     address: process.env.FILESEND_TOPIC_ADDRESS
+  },
+  returnTopic: {
+    address: process.env.RETURN_TOPIC_ADDRESS
   },
   eventsTopic: {
     address: process.env.EVENT_TOPIC_ADDRESS
@@ -45,9 +51,11 @@ if (result.error) {
 }
 
 const eventsTopic = { ...result.value.messageQueue, ...result.value.eventsTopic }
-const sendTopic = { ...result.value.messageQueue, ...result.value.sendTopic }
+const submitTopic = { ...result.value.messageQueue, ...result.value.submitTopic }
+const returnTopic = { ...result.value.messageQueue, ...result.value.returnTopic }
 
 module.exports = {
   eventsTopic,
-  sendTopic
+  submitTopic,
+  returnTopic
 }

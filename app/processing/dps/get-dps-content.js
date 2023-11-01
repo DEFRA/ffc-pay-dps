@@ -1,4 +1,4 @@
-const getContent = (securityRequest) => {
+const getDPSContent = (securityRequest) => {
   const line = [
     securityRequest.primaryTrader ?? '',
     securityRequest.usedByTrader ?? '',
@@ -20,5 +20,5 @@ const getContent = (securityRequest) => {
 }
 
 module.exports = {
-  getContent
+  getDPSContent
 }

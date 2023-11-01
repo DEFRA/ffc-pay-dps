@@ -1,6 +1,6 @@
 const { SOURCE } = require('../constants/source')
 
-function createMessage (filename, ledger) {
+function createSubmissionMessage (filename, ledger) {
   return {
     body: {
       filename,
@@ -11,4 +11,4 @@ function createMessage (filename, ledger) {
   }
 }
 
-module.exports = createMessage
+module.exports = createSubmissionMessage

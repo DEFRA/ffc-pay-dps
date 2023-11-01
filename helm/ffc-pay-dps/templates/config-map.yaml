@@ -14,8 +14,10 @@ data:
   POSTGRES_SCHEMA_NAME: {{ quote .Values.postgresService.postgresSchema }}
   {{- if and (.Values.environmentCode) (not .Values.pr) }}
   FILESEND_TOPIC_ADDRESS: {{ .Values.container.fileSendTopicAddress }}-{{ .Values.environmentCode }}
+  RETURN_TOPIC_ADDRESS: {{ .Values.container.returnTopicAddress }}-{{ .Values.environmentCode }}
   {{ else }}
   FILESEND_TOPIC_ADDRESS: {{ quote .Values.container.fileSendTopicAddress }}
+  RETURN_TOPIC_ADDRESS: {{ .Values.container.returnTopicAddress }}
   {{- end -}}
   USE_V2_EVENTS: {{ quote .Values.container.useV2Events }}
 {{- end -}}
