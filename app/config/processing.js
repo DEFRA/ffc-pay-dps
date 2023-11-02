@@ -12,7 +12,7 @@ const schema = Joi.object({
 const config = {
   pollingInterval: process.env.POLLING_INTERVAL,
   maxProcessingTries: process.env.MAX_PROCESSING_TRIES,
-  useEvents: process.env.USE_V2_EVENTS,
+  useEvents: process.env.USE_EVENTS,
   pollingActive: true
 }
 
