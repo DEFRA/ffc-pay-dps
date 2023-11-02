@@ -12,7 +12,7 @@ const getFRN = async (traderId) => {
   if (matchedEntry === null) {
     return 'TL UNKNOWN'
   }
-  return matchedEntry.FRN
+  return matchedEntry.frn
 }
 
 module.exports = getFRN

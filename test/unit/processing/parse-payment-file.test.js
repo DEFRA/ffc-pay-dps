@@ -33,22 +33,22 @@ describe('Parse', () => {
     jest.resetAllMocks()
   })
 
-  test('should call getSecurityRequestsFromFile when valid filename, fileBuffer and file type are received', async () => {
+  test('should call getSecurityRequestsFromFile when valid filename, fileBuffer and DPS file type are received', async () => {
     await parseSecurityFile(filename, fileBuffer, DPS)
     expect(getSecurityRequestsFromFile).toHaveBeenCalled()
   })
 
-  test('should call getSecurityRequestsFromFile once when valid filename, fileBuffer file type are received', async () => {
+  test('should call getSecurityRequestsFromFile once when valid filename, fileBuffer and DPS file type are received', async () => {
     await parseSecurityFile(filename, fileBuffer, DPS)
     expect(getSecurityRequestsFromFile).toHaveBeenCalledTimes(1)
   })
 
-  test('should call getSecurityRequestsFromFile with fileBuffer when valid filename, fileBuffer file type are received', async () => {
+  test('should call getSecurityRequestsFromFile with fileBuffer when valid filename, fileBuffer, DPS file type are received', async () => {
     await parseSecurityFile(filename, fileBuffer, DPS)
     expect(getSecurityRequestsFromFile).toHaveBeenCalledWith(fileBuffer, DPS, filename)
   })
 
-  test('should call getSecurityRequestsFromFile when invalid filename, fileBuffer and file type are received', async () => {
+  test('should call getSecurityRequestsFromFile when invalid filename, but fileBuffer and DPS file type are received', async () => {
     fileBuffer = ''
 
     await parseSecurityFile('', fileBuffer, DPS)
@@ -56,7 +56,7 @@ describe('Parse', () => {
     expect(getSecurityRequestsFromFile).toHaveBeenCalled()
   })
 
-  test('should call getSecurityRequestsFromFile once when invalid filename, fileBuffer and file type are received', async () => {
+  test('should call getSecurityRequestsFromFile once when invalid filename, but fileBuffer and DPS file type are received', async () => {
     fileBuffer = ''
 
     await parseSecurityFile('', fileBuffer, DPS)

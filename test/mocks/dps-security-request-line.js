@@ -4,11 +4,16 @@ const filename = require('./filename')
 const primaryTrader = require('./primary-trader')
 const usedByTrader = require('./used-by-trader')
 const reference = require('./reference')
+const fullReference = require('./full-reference')
+const guaranteeNumber = require('./guarantee-number')
 const scheme = require('./scheme')
+const debit = require('./debit')
 const credit = require('./credit')
 const currency = require('./currency')
 const transactionCategory = require('./transaction-category')
-const date = require('./date')
+const measurementStartDate = require('./measurement-start-date')
+const makeForwardDate = require('./make-forward-date')
+const description = require('./description')
 
 module.exports = {
   correlationId,
@@ -17,15 +22,15 @@ module.exports = {
   primaryTrader,
   usedByTrader,
   reference,
-  fullReference: reference,
-  guaranteeNumber: '',
+  fullReference,
+  guaranteeNumber,
   scheme,
-  debit: '',
+  debit,
   credit,
   currency,
   transactionCategory,
-  makeForwardDate: '',
-  measurementStartDate: date,
-  description: ''
+  makeForwardDate,
+  measurementStartDate,
+  description
 
 }
