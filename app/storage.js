@@ -107,8 +107,8 @@ const quarantineFile = async (filename, fileType) => {
 
 const getOutboundBlobClient = async (filename, fileType) => {
   containersInitialised ?? await initialiseContainers()
-  const fileContainer = fileType === DPS ? daxContainer : container
-  return fileContainer.getBlockBlobClient(`${storageConfig.outboundFolder}/${filename}`)
+  const folder = fileType === DPS ? storageConfig.outboundFolder : storageConfig.returnFolder
+  return daxContainer.getBlockBlobClient(`${folder}/${filename}`)
 }
 
 module.exports = {
