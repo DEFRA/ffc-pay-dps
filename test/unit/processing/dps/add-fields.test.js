@@ -8,12 +8,12 @@ const usedByTrader = require('../../../mocks/used-by-trader')
 const securityRequests = [dpsSecurityRequestLine, { ...dpsSecurityRequestLine, primaryTrader: '12345678', usedByTrader: '98765432' }, { ...dpsSecurityRequestLine, primaryTrader: '1234567890', usedByTrader: '9876543210' }]
 const primaryEntry = {
   customerId: 1,
-  traderId: primaryTrader,
+  trader: primaryTrader,
   frn: '123456789'
 }
 const usedByEntry = {
   customerId: 2,
-  traderId: usedByTrader,
+  trader: usedByTrader,
   frn: '432156798'
 }
 
