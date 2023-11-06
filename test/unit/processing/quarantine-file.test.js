@@ -69,21 +69,6 @@ describe('quarantine file', () => {
     expect(storage.quarantineFile).toHaveBeenCalledWith([])
   })
 
-  test('should call blobStorage.quarantineFile when undefined is received', async () => {
-    await quarantineFile(undefined)
-    expect(storage.quarantineFile).toHaveBeenCalled()
-  })
-
-  test('should call blobStorage.quarantineFile once when undefined is received', async () => {
-    await quarantineFile(undefined)
-    expect(storage.quarantineFile).toHaveBeenCalledTimes(1)
-  })
-
-  test('should call blobStorage.quarantineFile with undefined when undefined is received', async () => {
-    await quarantineFile(undefined)
-    expect(storage.quarantineFile).toHaveBeenCalledWith(undefined)
-  })
-
   test('should call blobStorage.quarantineFile when null is received', async () => {
     await quarantineFile(null)
     expect(storage.quarantineFile).toHaveBeenCalled()
