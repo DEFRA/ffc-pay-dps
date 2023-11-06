@@ -10,7 +10,7 @@ const getFRN = async (trader) => {
     raw: true
   })
   if (matchedEntry === null) {
-    return 'TL UNKNOWN'
+    return 'UNKNOWN'
   }
   return matchedEntry.frn
 }

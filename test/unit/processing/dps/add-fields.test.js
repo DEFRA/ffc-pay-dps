@@ -34,9 +34,9 @@ describe('Add fields to DPS request', () => {
     expect(result[0].primaryFRN).toBe('123456789')
   })
 
-  test('Correctly sets primaryFRN as TL UNKNOWN if entry is not in DB', async () => {
+  test('Correctly sets primaryFRN as UNKNOWN if entry is not in DB', async () => {
     const result = await addFields(securityRequests)
-    expect(result[1].primaryFRN).toBe('TL UNKNOWN')
+    expect(result[1].primaryFRN).toBe('UNKNOWN')
   })
 
   test('Correctly sets usedByFRN if entry is in DB', async () => {
@@ -44,9 +44,9 @@ describe('Add fields to DPS request', () => {
     expect(result[0].usedByFRN).toBe('432156798')
   })
 
-  test('Correctly sets usedByFRN as TL UNKNOWN if entry is not in DB', async () => {
+  test('Correctly sets usedByFRN as UNKNOWN if entry is not in DB', async () => {
     const result = await addFields(securityRequests)
-    expect(result[1].usedByFRN).toBe('TL UNKNOWN')
+    expect(result[1].usedByFRN).toBe('UNKNOWN')
   })
 
   test('Correctly sets primaryFRN if primaryTrader is 10 chars', async () => {
