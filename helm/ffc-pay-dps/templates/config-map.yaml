@@ -20,6 +20,6 @@ data:
   EVENTS_TOPIC_ADDRESS: {{ quote .Values.container.eventsTopicAddress }}
   FILESEND_TOPIC_ADDRESS: {{ quote .Values.container.fileSendTopicAddress }}
   RETURN_TOPIC_ADDRESS: {{ .Values.container.returnTopicAddress }}
-  {{- end -}}
+  {{- end }}
   USE_EVENTS: {{ quote .Values.container.useEvents }}
 {{- end -}}
