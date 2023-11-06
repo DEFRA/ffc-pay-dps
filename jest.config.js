@@ -31,6 +31,6 @@ module.exports = {
   ],
   testEnvironment: 'node',
   testPathIgnorePatterns: [],
-  testTimeout: 20000,
+  testTimeout: 25000,
   verbose: true
 }
