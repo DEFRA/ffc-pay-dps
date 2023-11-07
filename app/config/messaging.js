@@ -12,9 +12,6 @@ const schema = joi.object({
   submitTopic: {
     address: joi.string()
   },
-  returnTopic: {
-    address: joi.string()
-  },
   eventsTopic: {
     address: joi.string()
   }
@@ -30,9 +27,6 @@ const config = {
   },
   submitTopic: {
     address: process.env.FILESEND_TOPIC_ADDRESS
-  },
-  returnTopic: {
-    address: process.env.RETURN_TOPIC_ADDRESS
   },
   eventsTopic: {
     address: process.env.EVENT_TOPIC_ADDRESS
@@ -50,10 +44,7 @@ if (result.error) {
 
 const eventsTopic = { ...result.value.messageQueue, ...result.value.eventsTopic }
 const submitTopic = { ...result.value.messageQueue, ...result.value.submitTopic }
-const returnTopic = { ...result.value.messageQueue, ...result.value.returnTopic }
-
 module.exports = {
   eventsTopic,
-  submitTopic,
-  returnTopic
+  submitTopic
 }
