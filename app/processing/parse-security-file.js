@@ -1,5 +1,5 @@
 const { DPS } = require('../constants/file-types')
-const { sendSubmissionMessage, sendReturnMessage } = require('../messaging')
+const { sendSubmissionMessage } = require('../messaging')
 const { addFields: addDPSFields } = require('./dps/add-fields')
 const getSecurityRequestsFromFile = require('./get-security-requests-from-file')
 const { publish } = require('./publish')
@@ -22,8 +22,6 @@ const sendParsedSecurityRequests = async (securityRequests, filename, fileType) 
     await publish(securityRequests, filename, fileType)
     if (fileType === DPS) {
       await sendSubmissionMessage(filename, fileType)
-    } else {
-      await sendReturnMessage(securityRequests, filename)
     }
     console.log('Events not yet implemented')
   } catch (err) {
