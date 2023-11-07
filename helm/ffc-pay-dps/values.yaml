@@ -35,7 +35,6 @@ container:
   azureStorageCreateContainers: false
   messageQueueHost: namespace.servicebus.windows.net
   fileSendTopicAddress: ffc-pay-file-send
-  returnTopicAddress: ffc-pay-return
   storageContainer: batch
   storageFolder: inbound
   storageDaxContainer: dax
