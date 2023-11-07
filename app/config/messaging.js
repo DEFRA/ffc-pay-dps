@@ -12,6 +12,12 @@ const schema = joi.object({
   submitTopic: {
     address: joi.string()
   },
+<<<<<<< HEAD
+=======
+  returnTopic: {
+    address: joi.string()
+  },
+>>>>>>> main
   eventsTopic: {
     address: joi.string()
   }
@@ -44,8 +50,17 @@ if (result.error) {
 
 const eventsTopic = { ...result.value.messageQueue, ...result.value.eventsTopic }
 const submitTopic = { ...result.value.messageQueue, ...result.value.submitTopic }
+<<<<<<< HEAD
 
 module.exports = {
   eventsTopic,
   submitTopic
+=======
+const returnTopic = { ...result.value.messageQueue, ...result.value.returnTopic }
+
+module.exports = {
+  eventsTopic,
+  submitTopic,
+  returnTopic
+>>>>>>> main
 }
