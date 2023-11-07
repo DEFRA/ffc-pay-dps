@@ -1,0 +1,5 @@
+module.exports = {
+  DPS: 'BGAN20230908164539C.OUT',
+  DAX: 'BGAN20171101114636D.ack',
+  newDPS: 'BGAN20230908164539C.csv'
+}

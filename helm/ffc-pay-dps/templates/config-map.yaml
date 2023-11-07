@@ -2,6 +2,24 @@
 {{- define "ffc-pay-dps.config-map" -}}
 data:
   NODE_ENV: {{ quote .Values.environment }}
-  PORT: {{ quote .Values.container.port }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
+  AZURE_STORAGE_ACCOUNT_NAME: {{ quote .Values.container.azureStorageAccountName }}
+  AZURE_STORAGE_CONNECTION_STRING: {{ quote .Values.container.azureStorageConnectionString }}
+  AZURE_STORAGE_USE_CONNECTION_STRING: {{ quote .Values.container.azureStorageUseConnectionString }}
+  AZURE_STORAGE_CREATE_CONTAINERS: {{ quote .Values.container.azureStorageCreateContainers }}
+  MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
+  POSTGRES_DB: {{ quote .Values.postgresService.postgresDb }}
+  POSTGRES_HOST: {{ quote .Values.postgresService.postgresqlHost }}
+  POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
+  POSTGRES_SCHEMA_NAME: {{ quote .Values.postgresService.postgresSchema }}
+  {{- if and (.Values.environmentCode) (not .Values.pr) }}
+  EVENTS_TOPIC_ADDRESS: {{ .Values.container.eventsTopicAddress }}-{{ .Values.environmentCode }}
+  FILESEND_TOPIC_ADDRESS: {{ .Values.container.fileSendTopicAddress }}-{{ .Values.environmentCode }}
+  RETURN_TOPIC_ADDRESS: {{ .Values.container.returnTopicAddress }}-{{ .Values.environmentCode }}
+  {{ else }}
+  EVENTS_TOPIC_ADDRESS: {{ quote .Values.container.eventsTopicAddress }}
+  FILESEND_TOPIC_ADDRESS: {{ quote .Values.container.fileSendTopicAddress }}
+  RETURN_TOPIC_ADDRESS: {{ .Values.container.returnTopicAddress }}
+  {{- end }}
+  USE_EVENTS: {{ quote .Values.container.useEvents }}
 {{- end -}}

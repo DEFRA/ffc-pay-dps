@@ -8,8 +8,27 @@ services:
     image: ffc-pay-dps-development
     container_name: ffc-pay-dps-development
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - "9263:9229"
     volumes:
       - ./app:/home/node/app
       - ./package.json:/home/node/package.json
+    environment:
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-pay-batch-azurite:10000/devstoreaccount1;
+    depends_on:
+      - ffc-pay-batch-azurite
+
+  ffc-pay-batch-azurite:
+    volumes:
+      - azurite_data:/data
+    ports:
+      - "10075:10000"
+
+  ffc-pay-dps-postgres:
+    ports:
+      - "5452:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  azurite_data:
+  postgres_data:

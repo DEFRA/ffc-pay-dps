@@ -11,6 +11,10 @@ labels:
 appInsights:
   connectionString:
 
+azureIdentity:
+  clientID: not-a-real-clientID
+  resourceID: not-a-real-resourceID
+
 containerConfigMap:
   name: ffc-pay-dps-config-map
 
@@ -25,20 +29,25 @@ container:
   requestCpu: 100m
   limitMemory: 100Mi
   limitCpu: 100m
-  port: 3000
+  azureStorageAccountName: ffcpay
+  azureStorageConnectionString: dummy
+  azureStorageUseConnectionString: false
+  azureStorageCreateContainers: false
+  messageQueueHost: namespace.servicebus.windows.net
+  fileSendTopicAddress: ffc-pay-file-send
+  returnTopicAddress: ffc-pay-return
+  storageContainer: batch
+  storageFolder: inbound
+  storageDaxContainer: dax
+  storageDaxFolder: outbound
+  eventsTopicAddress: ffc-pay-events
+  useEvents: true
+  
+postgresService:
+  postgresDb: ffc_pay_dps
+  postgresqlHost: ffc-pay-dps-postgres
+  postgresPort: 5432
+  postgresSchema: public
+  postgresUser: postgres
 
-livenessProbe:
-  path: /healthz
-  port: 3000
-  initialDelaySeconds: 20
-  periodSeconds: 10
-  failureThreshold: 3
-  timeoutSeconds: 5
-
-readinessProbe:
-  path: /healthy
-  port: 3000
-  initialDelaySeconds: 30
-  periodSeconds: 10
-  failureThreshold: 3
-  timeoutSeconds: 5
+aadPodIdentity: true
