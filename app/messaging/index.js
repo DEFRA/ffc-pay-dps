@@ -1,6 +1,5 @@
-const { MessageSender, MessageBatchSender } = require('ffc-messaging')
+const { MessageSender } = require('ffc-messaging')
 const createSubmissionMessage = require('./create-submission-message')
-const createReturnMessage = require('./create-return-message')
 const { submitTopic } = require('../config/messaging')
 const { getNewFileName } = require('../processing/get-new-filename')
 
