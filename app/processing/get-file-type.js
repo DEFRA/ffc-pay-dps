@@ -1,7 +1,7 @@
 const { DPS, DAX, UNKNOWN } = require('../constants/file-types')
 
 const getFileType = (filename) => {
-  if (!filename || typeof filename !== 'string' || !filename.includes('BGAN')) {
+  if (!filename || typeof filename !== 'string' || !filename.startsWith('BGAN')) {
     return UNKNOWN
   }
 
