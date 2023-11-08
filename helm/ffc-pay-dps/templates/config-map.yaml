@@ -15,11 +15,9 @@ data:
   {{- if and (.Values.environmentCode) (not .Values.pr) }}
   EVENTS_TOPIC_ADDRESS: {{ .Values.container.eventsTopicAddress }}-{{ .Values.environmentCode }}
   FILESEND_TOPIC_ADDRESS: {{ .Values.container.fileSendTopicAddress }}-{{ .Values.environmentCode }}
-  RETURN_TOPIC_ADDRESS: {{ .Values.container.returnTopicAddress }}-{{ .Values.environmentCode }}
   {{ else }}
   EVENTS_TOPIC_ADDRESS: {{ quote .Values.container.eventsTopicAddress }}
   FILESEND_TOPIC_ADDRESS: {{ quote .Values.container.fileSendTopicAddress }}
-  RETURN_TOPIC_ADDRESS: {{ .Values.container.returnTopicAddress }}
   {{- end }}
   USE_EVENTS: {{ quote .Values.container.useEvents }}
 {{- end -}}
