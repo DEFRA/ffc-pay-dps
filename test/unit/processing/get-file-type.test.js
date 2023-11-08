@@ -13,6 +13,11 @@ describe('Get file type', () => {
     expect(result).toMatchObject(DAX)
   })
 
+  test('returns unknown for pending DPS filename', async () => {
+    const result = getFileType('PENDING_' + filename.DPS)
+    expect(result).toMatchObject(UNKNOWN)
+  })
+
   test('returns unknown for unknown filename', async () => {
     const result = getFileType('NOTAREALSCHEME_0001_AP_20220317104956617.OUT')
     expect(result).toMatchObject(UNKNOWN)
