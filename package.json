@@ -1,6 +1,6 @@
 {
   "name": "ffc-pay-dps",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "DPS processing",
   "homepage": "https://github.com/DEFRA/ffc-pay-dps",
   "main": "app/index.js",
@@ -26,6 +26,7 @@
     "ffc-messaging": "2.7.0",
     "ffc-pay-event-publisher": "1.2.0",
     "joi": "17.10.2",
+    "log-timestamp": "0.3.0",
     "pg": "8.11.3",
     "sequelize": "6.33.0"
   },
