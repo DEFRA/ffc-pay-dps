@@ -14,6 +14,11 @@ const schema = joi.object({
   },
   eventsTopic: {
     address: joi.string()
+  },
+  customerSubscription: {
+    address: joi.string(),
+    topic: joi.string(),
+    type: joi.string().allow('subscription')
   }
 })
 
@@ -30,6 +35,11 @@ const config = {
   },
   eventsTopic: {
     address: process.env.EVENT_TOPIC_ADDRESS
+  },
+  customerSubscription: {
+    address: process.env.CUSTOMER_SUBSCRIPTION_ADDRESS,
+    topic: process.env.CUSTOMER_TOPIC_ADDRESS,
+    type: 'subscription'
   }
 }
 
@@ -42,9 +52,12 @@ if (result.error) {
   throw new Error(`The message queue config is invalid. ${result.error.message}`)
 }
 
+const customerSubscription = { ...result.value.messageQueue, ...result.value.customerSubscription }
 const eventsTopic = { ...result.value.messageQueue, ...result.value.eventsTopic }
 const submitTopic = { ...result.value.messageQueue, ...result.value.submitTopic }
+
 module.exports = {
+  customerSubscription,
   eventsTopic,
   submitTopic
 }

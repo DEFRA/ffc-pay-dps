@@ -1,16 +1,20 @@
-const { MessageSender } = require('ffc-messaging')
-const createSubmissionMessage = require('./create-submission-message')
-const { submitTopic } = require('../config/messaging')
-const { getNewFileName } = require('../processing/get-new-filename')
+const { MessageReceiver } = require('ffc-messaging')
+const { messagingConfig } = require('../config')
+const { processCustomerMessage } = require('./process-customer-message')
+const paymentReceivers = []
+let customerReceiver
 
-const sendSubmissionMessage = async (filename, fileType) => {
-  filename = getNewFileName(filename, fileType)
-  const message = createSubmissionMessage(filename, fileType.fileType)
-  const sender = new MessageSender(submitTopic)
-  await sender.sendMessage(message)
-  await sender.closeConnection()
+const start = async () => {
+  const customerAction = message => processCustomerMessage(message, customerReceiver)
+  customerReceiver = new MessageReceiver(messagingConfig.customerSubscription, customerAction)
+  await customerReceiver.subscribe()
+  console.info('Ready to receive customer requests')
 }
 
-module.exports = {
-  sendSubmissionMessage
+const stop = async () => {
+  for (const paymentReceiver of paymentReceivers) {
+    await paymentReceiver.closeConnection()
+  }
 }
+
+module.exports = { start, stop }
