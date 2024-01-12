@@ -1,5 +1,5 @@
 const { DPS } = require('../constants/file-types')
-const { sendSubmissionMessage } = require('../messaging')
+const { sendSubmissionMessage } = require('../messaging/send-submission-message')
 const { addFields: addDPSFields } = require('./dps/add-fields')
 const getSecurityRequestsFromFile = require('./get-security-requests-from-file')
 const { publish } = require('./publish')
