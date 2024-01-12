@@ -40,6 +40,8 @@ container:
   storageDaxContainer: dax
   storageDaxFolder: outbound
   eventsTopicAddress: ffc-pay-events
+  customerTopicAddress: ffc-pay-customer
+  customerSubscriptionAddress: ffc-pay-dps
   useEvents: true
   
 postgresService:
