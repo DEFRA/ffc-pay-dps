@@ -8,7 +8,7 @@ const saveUpdate = async (customerUpdate) => {
       if (existingCustomer) {
         await db.customer.update({ frn: customerUpdate.frn }, { where: { id: existingCustomer.id } })
       } else {
-        await db.customer.create({ reference: customerUpdate[referenceType], frn: customerUpdate.frn })
+        await db.customer.create({ trader: customerUpdate[referenceType], frn: customerUpdate.frn })
       }
     }
   }
