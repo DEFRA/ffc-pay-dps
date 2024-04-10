@@ -4,7 +4,7 @@ const getNewFileName = (filename, fileType) => {
   if (fileType === DAX) {
     return filename
   }
-  return `${filename.slice(0, -4)}.csv`
+  return `FFC${filename.slice(0, -4)}.csv`
 }
 
 module.exports = {
