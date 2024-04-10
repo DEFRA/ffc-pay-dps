@@ -1,15 +1,15 @@
 const { DPS, DAX, UNKNOWN } = require('../constants/file-types')
 
 const getFileType = (filename) => {
-  if (!filename || typeof filename !== 'string' || !filename.startsWith('BGAN')) {
+  if (!filename || typeof filename !== 'string') {
     return UNKNOWN
   }
 
-  if (filename.endsWith('.OUT')) {
+  if (filename.startsWith('BGAN') && filename.endsWith('.OUT')) {
     return DPS
   }
 
-  if (filename.endsWith('.ack')) {
+  if (filename.startsWith('FFCBGAN') && filename.endsWith('.ack')) {
     return DAX
   }
 

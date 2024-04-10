@@ -5,7 +5,7 @@ const { DPS, DAX } = require('../../app/constants/file-types')
 
 const mockFileList = [{ name: 'BGAN_test1.OUT', type: DPS }, { name: 'BGAN_test2.OUT', type: DPS }]
 const testFileContents = 'This is a test file'
-const daxMockFileList = [{ name: 'BGAN_test3.ack', type: DAX }, { name: 'BGAN_test4.ack', type: DAX }]
+const daxMockFileList = [{ name: 'FFCBGAN_test3.ack', type: DAX }, { name: 'FFCBGAN_test4.ack', type: DAX }]
 const daxTestFileContents = 'This is a dax test file'
 
 let blobServiceClient
