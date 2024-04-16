@@ -8,9 +8,9 @@ describe('Get new file name', () => {
     jest.resetAllMocks()
   })
 
-  test('should not change the file type is DAX', async () => {
+  test('should change the file name correctly if type is DAX', async () => {
     const response = await getNewFileName(filename.DAX, DAX)
-    expect(response).toEqual(filename.DAX)
+    expect(response).toEqual(filename.newDAX)
   })
 
   test('should change the file name correctly is file type is DPS', async () => {
