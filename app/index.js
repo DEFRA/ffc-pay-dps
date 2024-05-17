@@ -3,12 +3,18 @@ require('log-timestamp')
 const polling = require('./polling')
 const messageService = require('./messaging')
 
-process.on(['SIGTERM', 'SIGINT'], async () => {
+async function handleSignals () {
   await messageService.stop()
   process.exit(0)
-})
+}
 
-module.exports = (async () => {
-  polling.start()
-  await messageService.start()
-})()
+process.on('SIGTERM', handleSignals)
+process.on('SIGINT', handleSignals)
+
+module.exports = {
+  start: async () => {
+    polling.start()
+    await messageService.start()
+  },
+  handleSignals
+}
