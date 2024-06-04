@@ -93,7 +93,8 @@ const moveFile = async (sourceFolder, destinationFolder, filename, fileType) => 
 }
 
 const archiveFile = async (filename, fileType) => {
-  return moveFile(storageConfig.inboundFolder, storageConfig.archiveFolder, filename, fileType)
+  const sourceFolder = fileType === DPS ? storageConfig.inboundFolder : storageConfig.returnFolder
+  return moveFile(sourceFolder, storageConfig.archiveFolder, filename, fileType)
 }
 
 const sanitizeFilename = (filename, fileType) => {
@@ -102,7 +103,8 @@ const sanitizeFilename = (filename, fileType) => {
 }
 
 const quarantineFile = async (filename, fileType) => {
-  return moveFile(storageConfig.inboundFolder, storageConfig.quarantineFolder, filename, fileType)
+  const sourceFolder = fileType === DPS ? storageConfig.inboundFolder : storageConfig.returnFolder
+  return moveFile(sourceFolder, storageConfig.quarantineFolder, filename, fileType)
 }
 
 const getOutboundBlobClient = async (filename, fileType) => {

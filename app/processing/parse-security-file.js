@@ -23,7 +23,6 @@ const sendParsedSecurityRequests = async (securityRequests, filename, fileType) 
     if (fileType === DPS) {
       await sendSubmissionMessage(filename, fileType)
     }
-    console.log('Events not yet implemented')
   } catch (err) {
     console.error(`One or more security requests could not be sent: ${err}`)
   }
