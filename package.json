@@ -23,7 +23,7 @@
     "@azure/storage-blob": "12.13.0",
     "@fast-csv/format": "4.3.5",
     "applicationinsights": "2.3.5",
-    "ffc-messaging": "2.7.0",
+    "ffc-messaging": "2.10.1",
     "ffc-pay-event-publisher": "1.2.0",
     "joi": "17.10.2",
     "log-timestamp": "0.3.0",
