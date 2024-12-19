@@ -28,7 +28,7 @@
     "joi": "17.10.2",
     "log-timestamp": "0.3.0",
     "pg": "8.11.3",
-    "sequelize": "6.33.0"
+    "sequelize": "6.37.5"
   },
   "devDependencies": {
     "jest": "29.6.4",
