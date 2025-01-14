@@ -3,7 +3,7 @@ require('log-timestamp')
 const polling = require('./polling')
 const messageService = require('./messaging')
 
-async function handleSignals () {
+const handleSignals = async () => {
   await messageService.stop()
   process.exit(0)
 }
