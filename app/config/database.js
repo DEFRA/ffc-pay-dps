@@ -1,27 +1,34 @@
 const { DefaultAzureCredential } = require('@azure/identity')
 const { PRODUCTION } = require('../constants/environments')
+const portNumber = 5432
+const timeout = 60000
+const backoffBase = 500
+const maxRetries = 10
 
 function isProd () {
   return process.env.NODE_ENV === PRODUCTION
 }
 
 const hooks = {
-  beforeConnect: async (cfg) => {
+  beforeConnect: async cfg => {
     if (isProd()) {
       const credential = new DefaultAzureCredential()
-      const accessToken = await credential.getToken('https://ossrdbms-aad.database.windows.net', { requestOptions: { timeout: 1000 } })
+      const accessToken = await credential.getToken(
+        'https://ossrdbms-aad.database.windows.net',
+        { requestOptions: { timeout: 1000 } }
+      )
       cfg.password = accessToken.token
     }
   }
 }
 
 const retry = {
-  backoffBase: 500,
+  backoffBase,
   backoffExponent: 1.1,
   match: [/SequelizeConnectionError/],
-  max: 10,
+  max: maxRetries,
   name: 'connection',
-  timeout: 60000
+  timeout
 }
 
 const config = {
@@ -33,7 +40,7 @@ const config = {
   hooks,
   host: process.env.POSTGRES_HOST || 'ffc-pay-dps-postgres',
   password: process.env.POSTGRES_PASSWORD,
-  port: process.env.POSTGRES_PORT || 5432,
+  port: process.env.POSTGRES_PORT || portNumber,
   logging: process.env.POSTGRES_LOGGING || false,
   retry,
   schema: process.env.POSTGRES_SCHEMA_NAME || 'public',
