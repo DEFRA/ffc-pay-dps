@@ -3,6 +3,12 @@ const mockPolling = {
 }
 jest.mock('../../app/polling', () => mockPolling)
 
+const mockEnv = {
+  POLLING_INTERVAL: 'invalid',
+  MAX_PROCESSING_TRIES: 'invalid',
+  USE_EVENTS: 'invalid'
+}
+
 const mockMessageService = {
   start: jest.fn(),
   stop: jest.fn()
@@ -47,5 +53,29 @@ describe('index.js', () => {
     await index.handleSignals()
     expect(mockMessageService.stop).toHaveBeenCalled()
     expect(process.exit).toHaveBeenCalledWith(0)
+  })
+})
+describe('processing config', () => {
+  beforeEach(() => {
+    jest.resetModules()
+    process.env = { ...mockEnv }
+  })
+
+  test('throws error when config is invalid', () => {
+    expect(() => {
+      require('../../app/config/processing')
+    }).toThrow(/The processing config is invalid./)
+  })
+
+  test('includes details of validation error in message', () => {
+    expect(() => {
+      require('../../app/config/processing')
+    }).toThrow(
+      /The processing config is invalid. "pollingInterval" must be a number/
+    )
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 })
