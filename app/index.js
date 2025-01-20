@@ -16,7 +16,7 @@ const start = async () => {
   await messageService.start()
 }
 
-await start()
+start()
 
 module.exports = {
   start,
