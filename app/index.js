@@ -11,10 +11,16 @@ const handleSignals = async () => {
 process.on('SIGTERM', handleSignals)
 process.on('SIGINT', handleSignals)
 
+const start = async () => {
+  await polling.start()
+  await messageService.start()
+}
+
+(async () => {
+  await start()
+})()
+
 module.exports = {
-  start: async () => {
-    polling.start()
-    await messageService.start()
-  },
+  start,
   handleSignals
 }
