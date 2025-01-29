@@ -10,7 +10,7 @@ function isProd () {
 }
 
 const hooks = {
-  beforeConnect: async cfg => {
+  beforeConnect: async (cfg) => {
     if (isProd()) {
       const credential = new DefaultAzureCredential()
       const accessToken = await credential.getToken(
