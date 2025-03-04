@@ -1,24 +1,25 @@
-const joi = require('joi')
+const Joi = require('joi')
 const { PRODUCTION } = require('../constants/environments')
 
-const schema = joi.object({
+const schema = Joi.object({
   messageQueue: {
-    host: joi.string().default('localhost'),
-    useCredentialChain: joi.bool().default(false),
-    appInsights: joi.object(),
-    username: joi.string(),
-    password: joi.string()
+    host: Joi.string().default('localhost'),
+    useCredentialChain: Joi.bool().default(false),
+    appInsights: Joi.object(),
+    username: Joi.string(),
+    password: Joi.string(),
+    managedIdentityClientId: Joi.string().optional()
   },
   submitTopic: {
-    address: joi.string()
+    address: Joi.string()
   },
   eventsTopic: {
-    address: joi.string()
+    address: Joi.string()
   },
   customerSubscription: {
-    address: joi.string(),
-    topic: joi.string(),
-    type: joi.string().allow('subscription')
+    address: Joi.string(),
+    topic: Joi.string(),
+    type: Joi.string().allow('subscription')
   }
 })
 
@@ -28,7 +29,8 @@ const config = {
     useCredentialChain: process.env.NODE_ENV === PRODUCTION,
     appInsights: process.env.NODE_ENV === PRODUCTION ? require('applicationinsights') : undefined,
     username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    managedIdentityClientId: process.env.AZURE_CLIENT_ID
   },
   submitTopic: {
     address: process.env.FILESEND_TOPIC_ADDRESS
