@@ -13,7 +13,7 @@ if (storageConfig.useConnectionStr) {
 } else {
   console.log('Using DefaultAzureCredential for BlobServiceClient')
   const uri = `https://${storageConfig.storageAccount}.blob.core.windows.net`
-  blobServiceClient = new BlobServiceClient(uri, new DefaultAzureCredential({ managedIdentityClientId: config.managedIdentityClientId }))
+  blobServiceClient = new BlobServiceClient(uri, new DefaultAzureCredential({ managedIdentityClientId: storageConfig.managedIdentityClientId }))
 }
 
 const container = blobServiceClient.getContainerClient(storageConfig.dpsContainer)
