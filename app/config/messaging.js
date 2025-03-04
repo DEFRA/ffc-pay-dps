@@ -7,7 +7,8 @@ const schema = joi.object({
     useCredentialChain: joi.bool().default(false),
     appInsights: joi.object(),
     username: joi.string(),
-    password: joi.string()
+    password: joi.string(),
+    managedIdentityClientId: Joi.string().optional()
   },
   submitTopic: {
     address: joi.string()
@@ -28,7 +29,8 @@ const config = {
     useCredentialChain: process.env.NODE_ENV === PRODUCTION,
     appInsights: process.env.NODE_ENV === PRODUCTION ? require('applicationinsights') : undefined,
     username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    managedIdentityClientId: process.env.AZURE_CLIENT_ID
   },
   submitTopic: {
     address: process.env.FILESEND_TOPIC_ADDRESS

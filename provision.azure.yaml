@@ -1,4 +1,13 @@
 resources:
+  identity: pay-dps
+  postgreSql:
+    name: ffc-pay-dps
   topics:
-    - name: fileSend
-    - name: event
+    - name: ffc-pay-customer
+      role: receiver
+      subscriptions:
+        - name: ffc-pay-dps
+    - name: ffc-pay-events
+      role: sender
+    - name: ffc-pay-file-send
+      role: sender
