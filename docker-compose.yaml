@@ -29,6 +29,7 @@ services:
       AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-pay-batch-azurite:10000/devstoreaccount1;
       CUSTOMER_TOPIC_ADDRESS: ${EVENTS_TOPIC_ADDRESS:-ffc-pay-customer}${MESSAGE_QUEUE_SUFFIX}
       CUSTOMER_SUBSCRIPTION_ADDRESS: ${EVENTS_TOPIC_ADDRESS:-ffc-pay-dps}${MESSAGE_QUEUE_SUFFIX}
+      PROCESSING_ACTIVE: ${PROCESSING_ACTIVE:-true}
 
   ffc-pay-dps-postgres:
     image: postgres:11.4-alpine

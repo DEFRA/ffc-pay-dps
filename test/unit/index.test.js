@@ -1,51 +1,56 @@
-const mockPolling = {
-  start: jest.fn()
-}
-jest.mock('../../app/polling', () => mockPolling)
+const { processingConfig } = require('../../app/config')
 
-const mockMessageService = {
-  start: jest.fn(),
-  stop: jest.fn()
-}
-jest.mock('../../app/messaging', () => mockMessageService)
+jest.mock('../../app/polling')
+const { start: mockStartPolling } = require('../../app/polling')
+jest.mock('../../app/messaging')
+const { start: mockStartMessaging } = require('../../app/messaging')
 
-const mockInsights = {
-  setup: jest.fn()
-}
-jest.mock('../../app/insights', () => mockInsights)
+const startApp = require('../../app')
 
-jest.mock('log-timestamp')
-
-describe('index.js', () => {
-  let index
-  const processExit = process.exit
-
+describe('app start', () => {
   beforeEach(() => {
-    jest.isolateModules(() => {
-      index = require('../../app/index')
-    })
-    process.exit = jest.fn() // Mock process.exit
+    jest.clearAllMocks()
   })
 
-  afterEach(() => {
-    process.exit = processExit // Restore original process.exit
+  test('starts polling when processingActive is true', async () => {
+    processingConfig.processingActive = true
+    await startApp()
+    expect(mockStartPolling).toHaveBeenCalledTimes(1)
   })
 
-  test('starts polling and message service when required', async () => {
-    await index.start()
-    expect(mockPolling.start).toHaveBeenCalled()
-    expect(mockMessageService.start).toHaveBeenCalled()
+  test('does not start polling if processingActive is false', async () => {
+    processingConfig.processingActive = false
+    await startApp()
+    expect(mockStartPolling).toHaveBeenCalledTimes(0)
   })
 
-  test('stops message service when SIGTERM signal is received', async () => {
-    await index.handleSignals()
-    expect(mockMessageService.stop).toHaveBeenCalled()
-    expect(process.exit).toHaveBeenCalledWith(0)
+  test('starts messaging when processingActive is true', async () => {
+    processingConfig.processingActive = true
+    await startApp()
+    expect(mockStartMessaging).toHaveBeenCalledTimes(1)
   })
 
-  test('stops message service when SIGINT signal is received', async () => {
-    await index.handleSignals()
-    expect(mockMessageService.stop).toHaveBeenCalled()
-    expect(process.exit).toHaveBeenCalledWith(0)
+  test('does not start messaging when processingActive is false', async () => {
+    processingConfig.processingActive = false
+    await startApp()
+    expect(mockStartMessaging).toHaveBeenCalledTimes(0)
+  })
+
+  test('does not log console.info when processingActive is true', async () => {
+    processingConfig.processingActive = true
+    const consoleInfoSpy = jest.spyOn(console, 'info').mockImplementation(() => {})
+    await startApp()
+    expect(consoleInfoSpy).not.toHaveBeenCalled()
+    consoleInfoSpy.mockRestore()
+  })
+
+  test('logs console.info when processingActive is false', async () => {
+    processingConfig.processingActive = false
+    const consoleInfoSpy = jest.spyOn(console, 'info').mockImplementation(() => {})
+    await startApp()
+    expect(consoleInfoSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Processing capabilities are currently not enabled in this environment')
+    )
+    consoleInfoSpy.mockRestore()
   })
 })
