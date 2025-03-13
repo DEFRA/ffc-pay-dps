@@ -43,6 +43,7 @@ container:
   storageDaxContainer: dax
   storageDaxFolder: outbound
   useEvents: true
+  processingActive: true
   
 postgresService:
   postgresDb: ffc_pay_dps
