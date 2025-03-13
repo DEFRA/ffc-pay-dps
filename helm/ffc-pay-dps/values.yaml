@@ -44,12 +44,29 @@ container:
   storageDaxFolder: outbound
   useEvents: true
   processingActive: true
-  
+  port: 3013
+
 postgresService:
   postgresDb: ffc_pay_dps
   postgresqlHost: ffc-pay-dps-postgres
   postgresPort: 5432
   postgresSchema: public
   postgresUser: postgres
+
+readinessProbe:
+  path: /healthy
+  port: 3013
+  initialDelaySeconds: 60
+  periodSeconds: 120
+  failureThreshold: 5
+  timeoutSeconds: 30
+
+livenessProbe:
+  path: /healthz
+  port: 3013
+  initialDelaySeconds: 70
+  periodSeconds: 120
+  failureThreshold: 5
+  timeoutSeconds: 30
 
 workloadIdentity: true

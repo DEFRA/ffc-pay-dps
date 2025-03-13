@@ -4,6 +4,7 @@ require('./insights').setup()
 const polling = require('./polling')
 const messageService = require('./messaging')
 const { processingConfig } = require('./config')
+const { start: startServer } = require('./server')
 
 process.on(['SIGTERM', 'SIGINT'], async () => {
   await messageService.stop()
@@ -11,6 +12,7 @@ process.on(['SIGTERM', 'SIGINT'], async () => {
 })
 
 const startApp = async () => {
+  await startServer()
   if (processingConfig.processingActive) {
     await polling.start()
     await messageService.start()
