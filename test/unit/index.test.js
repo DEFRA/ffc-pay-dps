@@ -4,6 +4,8 @@ jest.mock('../../app/polling')
 const { start: mockStartPolling } = require('../../app/polling')
 jest.mock('../../app/messaging')
 const { start: mockStartMessaging } = require('../../app/messaging')
+jest.mock('../../app/server')
+const { start: mockStartServer } = require('../../app/server')
 
 const startApp = require('../../app')
 
@@ -34,6 +36,18 @@ describe('app start', () => {
     processingConfig.processingActive = false
     await startApp()
     expect(mockStartMessaging).toHaveBeenCalledTimes(0)
+  })
+
+  test('starts server when active is true', async () => {
+    processingConfig.processingActive = true
+    await startApp()
+    expect(mockStartServer).toHaveBeenCalledTimes(1)
+  })
+
+  test('starts server when active is false', async () => {
+    processingConfig.processingActive = false
+    await startApp()
+    expect(mockStartServer).toHaveBeenCalledTimes(1)
   })
 
   test('does not log console.info when processingActive is true', async () => {
