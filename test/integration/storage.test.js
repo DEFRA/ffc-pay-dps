@@ -3,86 +3,60 @@ const { storageConfig } = require('../../app/config')
 const blobStorage = require('../../app/storage')
 const { DPS, DAX } = require('../../app/constants/file-types')
 
-const mockFileList = [{ name: 'BGAN_test1.OUT', type: DPS }, { name: 'BGAN_test2.OUT', type: DPS }]
+const mockDpsFiles = [{ name: 'BGAN_test1.OUT', type: DPS }, { name: 'BGAN_test2.OUT', type: DPS }]
+const mockDaxFiles = [{ name: 'FFCBGAN_test3.ack', type: DAX }, { name: 'FFCBGAN_test4.ack', type: DAX }]
 const testFileContents = 'This is a test file'
-const daxMockFileList = [{ name: 'FFCBGAN_test3.ack', type: DAX }, { name: 'FFCBGAN_test4.ack', type: DAX }]
 const daxTestFileContents = 'This is a dax test file'
 
-let blobServiceClient
-let dpscontainer
-let daxcontainer
+let blobServiceClient, dpsContainer, daxContainer
 
-describe('Blob storage tests', () => {
+const uploadFiles = async (container, files, content) => {
+  for (const file of files) {
+    const blob = container.getBlockBlobClient(`${storageConfig.inboundFolder}/${file.name}`)
+    const buffer = Buffer.from(content)
+    await blob.upload(buffer, buffer.byteLength)
+  }
+}
+
+describe('Blob storage', () => {
   beforeEach(async () => {
     blobServiceClient = BlobServiceClient.fromConnectionString(storageConfig.connectionStr)
-    dpscontainer = blobServiceClient.getContainerClient(storageConfig.dpsContainer)
-    daxcontainer = blobServiceClient.getContainerClient(storageConfig.daxContainer)
-    await dpscontainer.deleteIfExists()
-    await dpscontainer.createIfNotExists()
-    await daxcontainer.deleteIfExists()
-    await daxcontainer.createIfNotExists()
+    dpsContainer = blobServiceClient.getContainerClient(storageConfig.dpsContainer)
+    daxContainer = blobServiceClient.getContainerClient(storageConfig.daxContainer)
 
-    for (const file of mockFileList) {
-      const blob = dpscontainer.getBlockBlobClient(`${storageConfig.inboundFolder}/${file.name}`)
-      const buffer = Buffer.from(testFileContents)
-      await blob.upload(buffer, buffer.byteLength)
-    }
-    for (const file of daxMockFileList) {
-      const blob = daxcontainer.getBlockBlobClient(`${storageConfig.inboundFolder}/${file.name}`)
-      const buffer = Buffer.from(daxTestFileContents)
-      await blob.upload(buffer, buffer.byteLength)
-    }
+    await dpsContainer.deleteIfExists()
+    await dpsContainer.createIfNotExists()
+    await daxContainer.deleteIfExists()
+    await daxContainer.createIfNotExists()
+
+    await uploadFiles(dpsContainer, mockDpsFiles, testFileContents)
+    await uploadFiles(daxContainer, mockDaxFiles, daxTestFileContents)
   })
 
-  test('List files in both DPS and DAX inbound blob containers', async () => {
+  test('lists all pending files in DPS and DAX containers', async () => {
     const fileList = await blobStorage.getPendingFiles()
-    expect(fileList).toEqual(expect.arrayContaining(mockFileList.concat(daxMockFileList)))
+    expect(fileList).toEqual(expect.arrayContaining([...mockDpsFiles, ...mockDaxFiles]))
   })
 
-  test('Download blob into buffer from DPS blob container', async () => {
-    const buffer = await blobStorage.getFile(mockFileList[0].name, DPS)
-    const bufferContent = buffer.toString()
-
+  test.each([
+    [mockDpsFiles[0], DPS, testFileContents],
+    [mockDaxFiles[0], DAX, daxTestFileContents]
+  ])('downloads blob %s from %s container', async (file, type, expectedContent) => {
+    const buffer = await blobStorage.getFile(file.name, type)
     expect(buffer).toBeInstanceOf(Buffer)
-    expect(bufferContent).toEqual(testFileContents)
+    expect(buffer.toString()).toEqual(expectedContent)
   })
 
-  test('Download blob into buffer from DAX blob container', async () => {
-    const buffer = await blobStorage.getFile(daxMockFileList[0].name, DAX)
-    const bufferContent = buffer.toString()
-
-    expect(buffer).toBeInstanceOf(Buffer)
-    expect(bufferContent).toEqual(daxTestFileContents)
-  })
-
-  test('Copy blob from inbound to DPS archive container', async () => {
-    const result = await blobStorage.archiveFile(mockFileList[0].name, DPS)
-    const fileList = await blobStorage.getPendingFiles()
-    expect(result).toEqual(true)
-    expect(fileList.length).toEqual(mockFileList.length + daxMockFileList.length - 1)
-  })
-
-  test('Copy blob from inbound to DAX archive container', async () => {
-    const result = await blobStorage.archiveFile(daxMockFileList[0].name, DAX)
+  test.each([
+    [mockDpsFiles[0], DPS, 'archiveFile'],
+    [mockDaxFiles[0], DAX, 'archiveFile'],
+    [mockDpsFiles[0], DPS, 'quarantineFile'],
+    [mockDaxFiles[0], DAX, 'quarantineFile']
+  ])('moves %s to %s container using %s', async (file, type, method) => {
+    const result = await blobStorage[method](file.name, type)
     const fileList = await blobStorage.getPendingFiles()
 
-    expect(result).toEqual(true)
-    expect(fileList.length).toEqual(mockFileList.length + daxMockFileList.length - 1)
-  })
-
-  test('Copy blob from inbound to DPS quarantine container', async () => {
-    const result = await blobStorage.quarantineFile(mockFileList[0].name, DPS)
-    const fileList = await blobStorage.getPendingFiles()
-
-    expect(result).toEqual(true)
-    expect(fileList.length).toEqual(mockFileList.length + daxMockFileList.length - 1)
-  })
-
-  test('Copy blob from inbound to DAX quarantine container', async () => {
-    const result = await blobStorage.quarantineFile(daxMockFileList[0].name, DAX)
-    const fileList = await blobStorage.getPendingFiles()
-
-    expect(result).toEqual(true)
-    expect(fileList.length).toEqual(mockFileList.length + daxMockFileList.length - 1)
+    expect(result).toBe(true)
+    expect(fileList.length).toBe([...mockDpsFiles, ...mockDaxFiles].length - 1)
   })
 })
