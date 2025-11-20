@@ -4,64 +4,41 @@ const filename = require('../../../mocks/filename')
 
 const batchLine = ['010540', '010540', '1RB13915', 'Yes', 'GT0362947', 'Transfer of goods', 'Yes']
 
-describe('Transform DAX line', () => {
-  test('returns correlationId', async () => {
+describe('transformLine', () => {
+  const expectedValues = [
+    ['batch', filename.DAX],
+    ['fileTypeId', DAX.fileTypeId],
+    ['primaryTrader', '010540'],
+    ['usedByTrader', '010540'],
+    ['reference', '1RB13915'],
+    ['loaded', 'Yes'],
+    ['daxReference', 'GT0362947'],
+    ['reason', 'Transfer of goods'],
+    ['posted', 'Yes']
+  ]
+
+  test.each(expectedValues)('returns correct %s', (key, expected) => {
     const result = transformLine(batchLine, filename.DAX)
-    expect(result.correlationId).not.toBe(null)
+    expect(result[key]).toBe(expected)
   })
 
-  test('returns batch', async () => {
+  test('returns correlationId', () => {
     const result = transformLine(batchLine, filename.DAX)
-    expect(result.batch).toBe(filename.DAX)
+    expect(result.correlationId).not.toBeNull()
   })
 
-  test('returns fileTypeId of DAX ID', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.fileTypeId).toBe(DAX.fileTypeId)
-  })
+  describe('handles empty batchLine', () => {
+    let result
+    beforeAll(() => {
+      result = transformLine([], filename.DAX)
+    })
 
-  test('returns primaryTrader', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.primaryTrader).toBe('010540')
-  })
+    test('returns correlationId', () => {
+      expect(result.correlationId).not.toBeNull()
+    })
 
-  test('returns usedByTrader', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.usedByTrader).toBe('010540')
-  })
-
-  test('returns reference', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.reference).toBe('1RB13915')
-  })
-
-  test('returns loaded', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.loaded).toBe('Yes')
-  })
-
-  test('returns daxReference', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.daxReference).toBe('GT0362947')
-  })
-
-  test('returns reason', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.reason).toBe('Transfer of goods')
-  })
-
-  test('returns posted', async () => {
-    const result = transformLine(batchLine, filename.DAX)
-    expect(result.posted).toBe('Yes')
-  })
-
-  test('returns correlationId even if batchLine is empty', async () => {
-    const result = transformLine([], filename.DAX)
-    expect(result.correlationId).not.toBe(null)
-  })
-
-  test('returns batch even if batchLine is empty', async () => {
-    const result = transformLine([], filename.DAX)
-    expect(result.batch).toBe(filename.DAX)
+    test('returns batch', () => {
+      expect(result.batch).toBe(filename.DAX)
+    })
   })
 })
