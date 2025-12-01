@@ -7,7 +7,7 @@ const sendCustomerUpdateFailureEvent = async (data, type, error) => {
     const event = {
       source: 'ffc-pay-dps',
       type,
-      subject: invoiceNumber,
+      subject: 'Customer Update Failure',
       data: {
         message: error,
         ...data
