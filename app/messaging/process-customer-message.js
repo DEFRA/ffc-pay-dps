@@ -10,6 +10,7 @@ const processCustomerMessage = async (message, receiver) => {
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process payment request:', util.inspect(err.message, false, null, true))
+    await receiver.deadLetterMessage(message)
   }
 }
 
