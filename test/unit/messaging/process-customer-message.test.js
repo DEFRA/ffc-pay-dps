@@ -5,12 +5,15 @@ const { FRN } = require('../../../test/mocks/frn')
 
 const { processCustomerMessage } = require('../../../app/messaging/process-customer-message')
 
+jest.mock('../../../app/event')
+
 let receiver
 
 describe('process payment message', () => {
   beforeEach(() => {
     receiver = {
-      completeMessage: jest.fn()
+      completeMessage: jest.fn(),
+      deadLetterMessage: jest.fn()
     }
   })
 
@@ -45,5 +48,6 @@ describe('process payment message', () => {
     }
     await processCustomerMessage(message, receiver)
     expect(receiver.completeMessage).not.toHaveBeenCalled()
+    expect(receiver.deadLetterMessage).toHaveBeenCalledWith(message)
   })
 })
