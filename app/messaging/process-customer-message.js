@@ -1,5 +1,7 @@
 const util = require('util')
 const { saveUpdate } = require('../customer')
+const { sendCustomerUpdateFailureEvent } = require('../event')
+const { CUSTOMER_UPDATE_PROCESSING_FAILED } = require('../constants/events')
 
 const processCustomerMessage = async (message, receiver) => {
   const update = message.body
@@ -10,6 +12,7 @@ const processCustomerMessage = async (message, receiver) => {
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process payment request:', util.inspect(err.message, false, null, true))
+    await sendCustomerUpdateFailureEvent(update, CUSTOMER_UPDATE_PROCESSING_FAILED, err)
     await receiver.deadLetterMessage(message)
   }
 }
