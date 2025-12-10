@@ -35,6 +35,7 @@ container:
   azureStorageCreateContainers: false
   messageQueueHost: namespace.servicebus.windows.net
   fileSendTopicAddress: ffc-pay-file-send
+  eventTopicAddress: ffc-pay-event
   eventsTopicAddress: ffc-pay-events
   customerTopicAddress: ffc-pay-customer
   customerSubscriptionAddress: ffc-pay-dps
