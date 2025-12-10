@@ -7,6 +7,12 @@ const processCustomerMessage = async (message, receiver) => {
   const update = message.body
   try {
     console.log('Customer update received:', util.inspect(update, false, null, true))
+     if (
+      !update?.frn ||
+      (!update.vendor && !update.trader && !update.sbi)
+    ) {
+      throw new Error('Invalid customer update message')
+    }
     await saveUpdate(update)
     console.log('Customer update processed')
     await receiver.completeMessage(message)
