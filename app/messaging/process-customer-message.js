@@ -7,7 +7,7 @@ const processCustomerMessage = async (message, receiver) => {
   const update = message.body
   try {
     console.log('Customer update received:', util.inspect(update, false, null, true))
-     if (
+    if (
       !update?.frn ||
       (!update.vendor && !update.trader && !update.sbi)
     ) {
