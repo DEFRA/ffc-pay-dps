@@ -23,6 +23,7 @@ services:
       MESSAGE_QUEUE_HOST: servicebus-emulator
       MESSAGE_QUEUE_USER: RootManageSharedAccessKey
       MESSAGE_QUEUE_PASSWORD: SAS_KEY_VALUE
+      FILESEND_TOPIC_ADDRESS: ffc-pay-file-send-test
       
   ffc-pay-dps-postgres:
     volumes:
