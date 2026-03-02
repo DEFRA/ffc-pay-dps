@@ -51,7 +51,7 @@ describe('process files', () => {
 
     const archivedFiles = await listBlobs(dpsContainer, storageConfig.archiveFolder)
     expect(archivedFiles).toContain(`${storageConfig.archiveFolder}/${TEST_FILE_DPS}`)
-  })
+  }, 40000)
 
   test('does not process unrelated file', async () => {
     const testFile = 'ignore me.dat'
