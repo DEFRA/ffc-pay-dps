@@ -1,6 +1,6 @@
 {
   "name": "ffc-pay-dps",
-  "version": "1.1.21",
+  "version": "1.1.22",
   "description": "DPS processing",
   "homepage": "https://github.com/DEFRA/ffc-pay-dps",
   "main": "app/index.js",
@@ -23,7 +23,7 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/identity": "4.4.1",
-    "@azure/storage-blob": "12.29.1",
+    "@azure/storage-blob": "12.31.0",
     "@fast-csv/format": "5.0.5",
     "@hapi/hapi": "21.4.0",
     "applicationinsights": "2.9.6",
