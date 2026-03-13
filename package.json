@@ -28,13 +28,13 @@
     "@fast-csv/format": "5.0.5",
     "@hapi/hapi": "21.4.0",
     "applicationinsights": "2.9.6",
-    "ffc-database": "^1.0.24",
+    "ffc-database": "1.0.24",
     "ffc-messaging": "2.10.1",
     "ffc-pay-event-publisher": "1.2.0",
     "hapi-pino": "12.1.0",
     "joi": "17.10.2",
     "log-timestamp": "0.3.0",
-    "sequelize": "^6.37.8"
+    "sequelize": "6.37.8"
   },
   "devDependencies": {
     "blipp": "4.0.2",
