@@ -2,12 +2,29 @@ resources:
   identity: pay-dps
   postgreSql:
     name: ffc-pay-dps
-  topics:
-    - name: ffc-pay-customer
-      role: receiver
-      subscriptions:
-        - name: ffc-pay-dps
-    - name: ffc-pay-events
-      role: sender
-    - name: ffc-pay-file-send
-      role: sender
+  service_bus:
+    topics:
+      - name: ffc-pay-customer
+        defaultMessageTimeToLive: P3650D
+        duplicateDetectionHistoryTimeWindow: PT10M30S
+        requiresDuplicateDetection: true
+        roles: 
+        - name: receiver
+        subscriptions:
+          - name: ffc-pay-dps
+            deadLetteringOnMessageExpiration: true
+            defaultMessageTimeToLive: P3650D
+            lockDuration: PT5M
+            maxDeliveryCount: 2000
+      - name: ffc-pay-events
+        defaultMessageTimeToLive: P3650D
+        duplicateDetectionHistoryTimeWindow: PT10M30S
+        requiresDuplicateDetection: true
+        roles: 
+        - name: sender
+      - name: ffc-pay-file-send
+        defaultMessageTimeToLive: P3650D
+        duplicateDetectionHistoryTimeWindow: PT10M30S
+        requiresDuplicateDetection: true
+        roles: 
+        - name: sender
