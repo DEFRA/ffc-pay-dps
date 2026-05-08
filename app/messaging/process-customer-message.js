@@ -1,4 +1,3 @@
-const util = require('util')
 const { saveUpdate } = require('../customer')
 const { sendCustomerUpdateFailureEvent } = require('../event')
 const { CUSTOMER_UPDATE_PROCESSING_FAILED } = require('../constants/events')
