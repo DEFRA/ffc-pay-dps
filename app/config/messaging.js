@@ -5,7 +5,6 @@ const schema = Joi.object({
   messageQueue: {
     host: Joi.string().default('localhost'),
     useCredentialChain: Joi.bool().default(false),
-    appInsights: Joi.object(),
     username: Joi.string(),
     password: Joi.string(),
     managedIdentityClientId: Joi.string().optional()
@@ -27,7 +26,6 @@ const config = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
     useCredentialChain: process.env.NODE_ENV === PRODUCTION,
-    appInsights: process.env.NODE_ENV === PRODUCTION ? require('applicationinsights') : undefined,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD,
     managedIdentityClientId: process.env.AZURE_CLIENT_ID

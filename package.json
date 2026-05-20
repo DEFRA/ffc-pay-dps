@@ -1,6 +1,6 @@
 {
   "name": "ffc-pay-dps",
-  "version": "1.1.25",
+  "version": "1.1.26",
   "description": "DPS processing",
   "homepage": "https://github.com/DEFRA/ffc-pay-dps",
   "main": "app/index.js",
@@ -24,10 +24,10 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/identity": "4.4.1",
+    "@azure/monitor-opentelemetry": "^1.18.0",
     "@azure/storage-blob": "12.31.0",
     "@fast-csv/format": "5.0.5",
     "@hapi/hapi": "21.4.0",
-    "applicationinsights": "2.9.6",
     "ffc-database": "1.0.24",
     "ffc-messaging": "2.10.5",
     "ffc-pay-event-publisher": "1.2.3",
@@ -49,5 +49,8 @@
     "ignore": [
       "**/test-output/**"
     ]
+  },
+    "overrides": {
+    "protobufjs": "8.2.0"
   }
 }
