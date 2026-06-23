@@ -1,6 +1,6 @@
 {
   "name": "ffc-pay-dps",
-  "version": "1.1.27",
+  "version": "1.1.28",
   "description": "DPS processing",
   "homepage": "https://github.com/DEFRA/ffc-pay-dps",
   "main": "app/index.js",
