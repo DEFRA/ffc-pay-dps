@@ -45,6 +45,7 @@ container:
   useEvents: true
   processingActive: true
   port: 3013
+  azureLogLevel: error
 
 postgresService:
   postgresDb: ffc_pay_dps

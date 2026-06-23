@@ -26,4 +26,5 @@ data:
   {{- end }}
   USE_EVENTS: {{ quote .Values.container.useEvents }}
   CUSTOMER_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.customerSubscriptionAddress }}
+  AZURE_LOG_LEVEL: {{ quote .Values.container.azureLogLevel }}
 {{- end -}}
