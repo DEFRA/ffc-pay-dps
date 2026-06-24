@@ -44,6 +44,7 @@ container:
   storageDaxFolder: outbound
   useEvents: true
   processingActive: true
+  pollingInterval: 60000
   port: 3013
   azureLogLevel: error
 

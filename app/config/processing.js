@@ -3,7 +3,7 @@ const Joi = require('joi')
 // Define config schema
 const schema = Joi.object({
   processingActive: Joi.boolean().default(true),
-  pollingInterval: Joi.number().default(10000), // 10 seconds
+  pollingInterval: Joi.number().default(60000), // 60 seconds
   maxProcessingTries: Joi.number().default(3),
   useEvents: Joi.boolean().default(true),
   pollingActive: Joi.boolean().default(true)
