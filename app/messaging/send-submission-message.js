@@ -1,14 +1,13 @@
-const { MessageSender } = require('ffc-messaging')
+const { getSender, sendMessage: sendServiceBusMessage } = require('./service-bus')
 const createSubmissionMessage = require('./create-submission-message')
 const { submitTopic } = require('../config/messaging')
 const { getNewFileName } = require('../processing/get-new-filename')
 
 const sendSubmissionMessage = async (filename, fileType) => {
   filename = getNewFileName(filename, fileType)
-  const message = createSubmissionMessage(filename, fileType.fileType)
-  const sender = new MessageSender(submitTopic)
-  await sender.sendMessage(message)
-  await sender.closeConnection()
+  const sender = getSender(submitTopic)
+  const message = createSubmissionMessage(filename, fileType)
+  await sendServiceBusMessage(sender, message)
 }
 
 module.exports = {
