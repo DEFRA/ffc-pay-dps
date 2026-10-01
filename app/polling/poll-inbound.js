@@ -7,7 +7,7 @@ const pollInbound = async () => {
   try {
     await db.locks(transaction ?? undefined).where({ lockId: 1 }).forUpdate().first()
     const files = await storage.getPendingFiles()
-    for (const file of files) {
+    for await (const file of files) {
       try {
         await processFile(file.name, file.type)
       } catch (err) {

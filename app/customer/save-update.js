@@ -2,7 +2,7 @@ const { customers } = require('../database')
 const { TRADER } = require('../constants/reference-types')
 
 const saveUpdate = async (customerUpdate) => {
-  for (const referenceType in customerUpdate) {
+  for await (const referenceType of Object.keys(customerUpdate)) {
     if ([TRADER].includes(referenceType)) {
       const existingCustomer = (await customers().where({ trader: customerUpdate[referenceType].toString() }).first()) ?? null
       if (existingCustomer) {
