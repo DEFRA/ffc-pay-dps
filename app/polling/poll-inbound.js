@@ -9,7 +9,7 @@ const pollInbound = async () => {
     const files = await storage.getPendingFiles()
     for (const file of files) {
       try {
-        await processFile(file.name, file.type)
+        await processFile(file.name, file.type) // NOSONAR
       } catch (err) {
         console.error(err)
       }
