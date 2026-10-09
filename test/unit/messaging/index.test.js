@@ -1,10 +1,19 @@
+const { createKnexMock } = require('../../helpers/mock-knex')
+
+const mockDb = createKnexMock(['customers'])
+
 jest.mock('@azure/service-bus', () => ({
   ServiceBusClient: jest.fn(),
   ServiceBusAdministrationClient: jest.fn()
 }))
 
 jest.mock('@azure/identity')
-jest.mock('../../../app/data')
+jest.mock('../../../app/database', () => ({
+  client: mockDb.knex,
+  transaction: mockDb.transaction,
+  close: mockDb.close,
+  ...mockDb.tables
+}))
 
 const { ServiceBusClient } = require('@azure/service-bus')
 const { messagingConfig } = require('../../../app/config')
