@@ -17,7 +17,7 @@ const processCustomerMessage = async (message, receiver) => {
     console.log('Customer update processed')
     await receiver.completeMessage(message)
   } catch (err) {
-    console.error('Unable to process payment request:', util.inspect(err.message, false, null, true))
+    console.error('Unable to process customer update:', util.inspect(err.message, false, null, true))
     await sendCustomerUpdateFailureEvent(update, CUSTOMER_UPDATE_PROCESSING_FAILED, err)
     await receiver.deadLetterMessage(message)
   }
