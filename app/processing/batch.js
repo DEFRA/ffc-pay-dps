@@ -1,19 +1,20 @@
-const db = require('../data')
+const { batches } = require('../database')
 
 const create = async (filename, fileTypeId) => {
-  await db.batch.create({ filename, fileTypeId })
+  await batches().insert({ filename, fileTypeId })
 }
 
 const updateStatus = async (filename, statusId) => {
-  await db.batch.update({ statusId, processedOn: Date.now() }, { where: { filename } })
+  const now = new Date()
+  await batches().where({ filename }).update({ statusId, processedOn: now, updatedAt: now })
 }
 
 const incrementProcessingTries = async (filename) => {
-  await db.batch.increment('processingTries', { by: 1, where: { filename } })
+  await batches().where({ filename }).increment('processingTries', 1).update({ updatedAt: new Date() })
 }
 
 const exists = async (filename) => {
-  return db.batch.findOne({ where: { filename } })
+  return (await batches().where({ filename }).first()) ?? null
 }
 
 module.exports = {

@@ -1,11 +1,11 @@
 const storage = require('../storage')
 const processFile = require('../processing')
-const db = require('../data')
+const db = require('../database')
 
 const pollInbound = async () => {
-  const transaction = await db.sequelize.transaction()
+  const transaction = await db.transaction()
   try {
-    await db.lock.findByPk(1, { transaction, lock: true })
+    await db.locks(transaction ?? undefined).where({ lockId: 1 }).forUpdate().first()
     const files = await storage.getPendingFiles()
     for (const file of files) {
       try {
