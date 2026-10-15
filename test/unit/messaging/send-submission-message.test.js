@@ -37,7 +37,7 @@ describe('send submission message', () => {
     expect(getSender).toHaveBeenCalledWith(submitTopic)
     expect(sendServiceBusMessage).toHaveBeenCalledWith(
       sender,
-      createSubmissionMessage('FFC_BGAN20171101114636.csv', fileType)
+      createSubmissionMessage('FFC_BGAN20171101114636.csv', fileType.fileType)
     )
   })
 })

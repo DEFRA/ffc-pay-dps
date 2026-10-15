@@ -6,7 +6,7 @@ const { getNewFileName } = require('../processing/get-new-filename')
 const sendSubmissionMessage = async (filename, fileType) => {
   filename = getNewFileName(filename, fileType)
   const sender = getSender(submitTopic)
-  const message = createSubmissionMessage(filename, fileType)
+  const message = createSubmissionMessage(filename, fileType.fileType)
   await sendServiceBusMessage(sender, message)
 }
 
