@@ -1,4 +1,5 @@
-const db = require('../../../../app/data')
+const db = require('../../../../app/database')
+const { truncate } = require('../../../helpers/truncate')
 const { addFields } = require('../../../../app/processing/dps/add-fields')
 const dpsSecurityRequestLine = require('../../../mocks/dps-security-request-line')
 const primaryTrader = require('../../../mocks/primary-trader')
@@ -16,13 +17,13 @@ const usedByEntry = { customerId: 2, trader: usedByTrader, frn: '432156798' }
 describe('addFields', () => {
   beforeEach(async () => {
     jest.clearAllMocks()
-    await db.sequelize.truncate({ cascade: true })
-    await db.customer.bulkCreate([primaryEntry, usedByEntry])
+    await truncate()
+    await db.customers().insert([primaryEntry, usedByEntry])
   })
 
   afterAll(async () => {
-    await db.sequelize.truncate({ cascade: true })
-    await db.sequelize.close()
+    await truncate()
+    await db.close()
   })
 
   test.each([

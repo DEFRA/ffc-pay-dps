@@ -1,7 +1,8 @@
 const path = require('path')
 const { BlobServiceClient } = require('@azure/storage-blob')
 
-const db = require('../../../app/data')
+const db = require('../../../app/database')
+const { truncate } = require('../../helpers/truncate')
 const { storageConfig } = require('../../../app/config')
 const pollInbound = require('../../../app/polling/poll-inbound')
 
@@ -15,10 +16,10 @@ describe('process files', () => {
 
   beforeEach(async () => {
     jest.clearAllMocks()
-    await db.sequelize.truncate({ cascade: true })
+    await truncate()
 
-    await db.fileType.bulkCreate([{ fileTypeId: 1, fileType: 'DPS' }, { fileTypeId: 2, fileType: 'DAX' }])
-    await db.status.bulkCreate([{ statusId: 1, status: 'In progress' }, { statusId: 2, status: 'Success' }, { statusId: 3, status: 'Failed' }])
+    await db.fileTypes().insert([{ fileTypeId: 1, fileType: 'DPS' }, { fileTypeId: 2, fileType: 'DAX' }])
+    await db.statuses().insert([{ statusId: 1, status: 'In progress' }, { statusId: 2, status: 'Success' }, { statusId: 3, status: 'Failed' }])
 
     blobServiceClient = BlobServiceClient.fromConnectionString(storageConfig.connectionStr)
     dpsContainer = blobServiceClient.getContainerClient(storageConfig.dpsContainer)
@@ -31,8 +32,8 @@ describe('process files', () => {
   })
 
   afterAll(async () => {
-    await db.sequelize.truncate({ cascade: true })
-    await db.sequelize.close()
+    await truncate()
+    await db.close()
   })
 
   const listBlobs = async (container, prefix = '') => {
