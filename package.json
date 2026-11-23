@@ -1,6 +1,6 @@
 {
   "name": "ffc-pay-dps",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "DPS processing",
   "homepage": "https://github.com/DEFRA/ffc-pay-dps",
   "main": "app/index.js",
@@ -25,27 +25,29 @@
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@azure/identity": "4.13.3",
+    "@azure/identity": "4.14.1",
     "@azure/monitor-opentelemetry": "1.20.0",
     "@azure/service-bus": "7.9.5",
     "@azure/storage-blob": "12.31.0",
     "@fast-csv/format": "5.0.5",
     "@hapi/hapi": "21.4.0",
-    "ffc-database": "2.0.1",
-    "ffc-pay-event-publisher": "2.0.0",
+    "ffc-database": "2.0.2",
+    "ffc-pay-event-publisher": "2.0.2",
     "hapi-pino": "12.1.0",
-    "joi": "18.2.9",
-    "log-timestamp": "0.3.0",
-    "uuid": "11.1.1"
+    "joi": "18.3.2",
+    "log-timestamp": "0.3.0"
   },
   "devDependencies": {
     "blipp": "4.0.2",
-    "eslint": "9.39.1",
+    "eslint": "10.15.0",
     "husky": "9.1.7",
     "jest": "30.5.2",
     "jest-junit": "17.0.0",
-    "neostandard": "0.12.2",
+    "neostandard": "0.14.1",
     "nodemon": "3.1.14"
+  },
+  "overrides": {
+    "@opentelemetry/instrumentation-http": "0.222.0"
   },
   "nodemonConfig": {
     "ignore": [

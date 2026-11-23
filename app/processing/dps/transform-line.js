@@ -1,9 +1,9 @@
-const { v4: uuidv4 } = require('uuid')
+const { randomUUID } = require('node:crypto')
 const { DPS } = require('../../constants/file-types')
 
 const transformLine = (batchLine, filename) => {
   return {
-    correlationId: uuidv4(),
+    correlationId: randomUUID(),
     batch: filename,
     fileTypeId: DPS.fileTypeId,
     primaryTrader: batchLine[0],
